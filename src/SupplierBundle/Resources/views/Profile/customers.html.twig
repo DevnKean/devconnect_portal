@@ -1,0 +1,61 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %} Current Customers {% endblock %}
+{% block page_subtitle %}<a href="{{ url('profile_customer_new') }}" class="btn bg-orange btn-md"><i class="fa fa-plus"></i> Add Customer</a>{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '@Supplier/Profile/notification.html.twig' %}
+            {% include '@Supplier/Profile/feedback.html.twig' %}
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Please provide information about your current customers</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Industrial Vertical</th>
+                            <th>Functions</th>
+                            <th>Total Seats</th>
+                            <th>Percentage of Business</th>
+                            <th>Work Period</th>
+                            <th>Locations</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for customer in customers %}
+                            <tr>
+                                <td>{{ customer.name }}</td>
+                                <td>{{ customer.industryVertical }}</td>
+                                <td>
+                                    {% for function in customer.functions %}
+                                        <span>{{ function }}</span>
+                                    {% endfor %}
+                                </td>
+                                <td>{{ customer.totalSeats }}</td>
+                                <td>{{ customer.percentageOfBusiness | localizednumber('percent')}}</td>
+                                <td>{{ customer.workPeriod }}</td>
+                                <td>
+                                    {% for location in customer.locations %}
+                                        <span>{{ location.address }}</span>
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    <a class="btn bg-purple btn-xs" href="{{ path('profile_customer_edit', {'id': customer.id}) }}" ><i class="fa fa-edit"></i></a>
+                                    <a class="btn btn-danger btn-xs" href="{{ path('profile_customer_delete', {'id': customer.id}) }}" ><i class="fa fa-remove"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

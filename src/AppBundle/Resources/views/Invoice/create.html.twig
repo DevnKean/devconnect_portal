@@ -1,0 +1,52 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Create Invoice{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-5">
+            {{ form_start(form) }}
+            <!-- form start -->
+            <div class="box box-success">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    {{ form_widget(form) }}
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary pull-right">Create</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+        <div class="col-sm-7">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Invoice Data</h3>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body invoice-data">
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts_inline %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $('.supplier-invoice').change(function () {
+            var supplierInvoiceId = $(this).val();
+            var invoiceData = $('.invoice-data');
+            if (supplierInvoiceId) {
+                $.get('/supplier-invoices/' + supplierInvoiceId + '/invoice-data', function (data) {
+                    invoiceData.html(data);
+                });
+            } else {
+                invoiceData.html('<p>No invoice data available. Please select a supplier invoice first</p>');
+            }
+        }).change();
+    </script>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Channel Support{% endblock %}
+{% block page_subtitle %}{% endblock %}
+{% block page_content %}
+    {% form_theme form 'channel-support-theme.html.twig' 'jquery.collection.html.twig' %}
+
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '@Supplier/Profile/notification.html.twig' %}
+            {% include '@Supplier/Profile/feedback.html.twig' %}
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Please provide information on the current customer channels you actively support</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                {{ form_start(form, {'attr': {'class': 'dirty-check'}}) }}
+                <div class="box-body">
+                    {{ form_widget(form) }}
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3 class="text-danger">Have we missed one?</h3>
+                            <h4>If you've got another channel you support please click the 'Add new channel' button above to add it to your profile</h4>
+                            {#<button type="button" data-collection="channel" class="collection-action collection-add btn btn-success">Add new channel</button>#}
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-success" disabled>Save</button>
+                </div>
+                {{ form_end(form) }}
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts_inline %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var collections = [];
+        $('.channel-collection').collection({
+            add: '<button type="button" class="btn btn-success">Add new channel</button>',
+            allow_add: true,
+            allow_remove: true,
+            allow_up: false,
+            allow_down: false,
+            custom_add_location: false,
+            add_at_the_end: true,
+            after_init: function (collection) {
+                collection.children().each(function (index, element) {
+                    collections.push($(element).attr('id'))
+                })
+            },
+            after_add: function(collection, element) {
+                $('.dirty-check').find('button[type=submit]').removeAttr('disabled');
+                return true;
+            },
+            after_remove: function(collection, element) {
+                return true;
+            }
+        });
+
+
+    </script>
+{% endblock %}

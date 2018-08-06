@@ -1,0 +1,42 @@
+{% block ContactType_widget %}
+    <div class="panel panel-default">
+        <div class="panel-heading">{{ form.type.vars.value|capitalize }} Contact</div>
+        <div class="panel-body">
+            <div class="row {{ form.type.vars.value }}-contact">
+                {{ form_row(form.type) }}
+                <div class="col-lg-4 col-sm-12 col-md-12">
+                    {{ form_row(form.firstName) }}
+                </div>
+                <div class="col-lg-4 col-sm-12 col-md-12">
+                    {{ form_row(form.lastName) }}
+                </div>
+                <div class="col-lg-4 col-sm-12 col-md-12">
+                    {{ form_row(form.email) }}
+                </div>
+                <div class="col-lg-4 col-sm-12 col-md-12">
+                    {{ form_row(form.workPhone) }}
+                </div>
+                <div class="col-lg-4 col-sm-12 col-md-12">
+                    {{ form_row(form.mobilePhone) }}
+                </div>
+
+                {% if form.type.vars.value is not constant('AppBundle\\Entity\\Contact::TYPE_PRIMARY') %}
+                    <div class="col-lg-4 col-sm-12 col-md-12" style="padding-top: 25px">
+                        <div class="form-group">
+                            <button type="button" class="btn btn-info btn-large copy-contact">Copy from primary contact</button>
+                        </div>
+                    </div>
+                {% endif %}
+                {#<div class="col-sm-1">#}
+                    {#<div class="form-group">#}
+                        {#<a href="#" class="collection-remove btn btn-danger" title="Delete element"><i class="fa fa-trash"></i></a>#}
+                    {#</div>#}
+                {#</div>#}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+

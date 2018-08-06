@@ -1,0 +1,124 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}New Location{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+    {% form_theme form 'jquery.collection.html.twig' 'location-theme.html.twig' %}
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '@Supplier/Profile/notification.html.twig' %}
+            {% include '@Supplier/Profile/feedback.html.twig' %}
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Please provide us with an overview of the facilities where you operate from</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                {{ form_start(form, {'attr': {'class': 'dirty-check'}}) }}
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            {{ form_row(form.locations) }}
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-success" disabled>Save</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts_inline %}
+    {{ parent() }}
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMapAutocomplete&key=AIzaSyA3pdWCw-RyPFhPmNMD6a9TFfIMbyrl-rM"
+    async defer></script>
+    <script type="text/javascript">
+        $(function () {
+            var collections = [];
+            $('.location-collection').collection({
+                add: '<button type="button" class="btn btn-success">Add another location</button>',
+                remove: '<button type="button" class="btn btn-danger pull-right">Remove</button>',
+                allow_add: true,
+                allow_remove: true,
+                allow_up: false,
+                allow_down: false,
+                min: 1,
+                add_at_the_end: true,
+                after_init: function (collection) {
+                    collection.children().each(function (index, element) {
+//                        init(element)
+//                        collections.push($(element).attr('id'))
+                    })
+                },
+                after_add: function(collection, element) {
+                    init(element);
+                    $('.dirty-check').find('button[type=submit]').removeAttr('disabled');
+                    return true;
+                },
+                after_remove: function(collection, element) {
+                    $('.dirty-check').find('button[type=submit]').removeAttr('disabled');
+                    return true;
+                }
+            });
+
+            $('form[name="supplierbundle_location"]').find('input[type="checkbox"]').change(function (e) {
+                var checkbox = $(this);
+                var row = checkbox.closest('div.row');
+                if (checkbox.is(':checked')) {
+                    row.find('input[type="text"]').prop('disabled', true);
+                } else {
+                    row.find('input[type="text"]').prop('disabled', false);
+                }
+            }).change();
+
+            function init (element) {
+                var id = $(element).attr('id');
+                var formId = id.substr(0, 36);
+                console.log(formId);
+                console.log(element);
+                initMapAutocomplete(formId + 'address')
+                $(element).find('.open-time').val('8:00');
+                $(element).find('.close-time').val('18:00');
+                $(element).find('.timepicker').timepicker({
+                    showInputs: false,
+                    showMeridian: false
+                });
+
+                $(element).find('input[type="checkbox"]').change(function (e) {
+                    var checkbox = $(this);
+                    var row = checkbox.closest('div.row');
+                    if (checkbox.is(':checked')) {
+                        row.find('input[type="text"]').prop('disabled', true);
+                    } else {
+                        row.find('input[type="text"]').prop('disabled', false);
+                    }
+                }).change();
+            }
+            function initMapAutocomplete(formId) {
+                var userInput = /** @type {!HTMLInputElement} */(document.getElementById(formId +'_autocomplete'));
+                var inputName              = document.getElementById(formId +'_name');
+                var inputAddressComponents = document.getElementById(formId +'_address_components');
+                var autocomplete = new window.google.maps.places.Autocomplete(userInput);
+                var placeService = new window.google.maps.places.PlacesService(userInput);
+                window.google.maps.event.addListener(autocomplete, 'place_changed', function() {
+                    var place = autocomplete.getPlace();
+                    inputName.value              = place.name;
+                    inputAddressComponents.value = JSON.stringify(place.address_components);
+                    // try to clean name
+                    if(place.place_id) {
+                        placeService.getDetails({placeId: place.place_id}, function (result) {
+                            inputName = result.name;
+                        });
+                    }
+                });
+            }
+        })
+    </script>
+{% endblock %}

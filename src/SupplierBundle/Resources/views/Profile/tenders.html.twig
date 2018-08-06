@@ -1,0 +1,38 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Tenders{% endblock %}
+{% block page_subtitle %}Tenders, RFI, RFPs{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '@Supplier/Profile/notification.html.twig' %}
+            {% include '@Supplier/Profile/feedback.html.twig' %}
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <div class="box-title">
+                        <p>In addition to us sending you highly qualified leads, we are often engaged to provide a recommended shortlist of call centre outsourcers qualified to participate in Request for Proposals (RFP), Request for Information (RFI) and Tenders.</p>
+                        <p>We still apply our due diligence in only recommending suppliers suitably qualified to meet the requirements and you will only be sent the opportunity if the RFI/RFP/Tender meets your minimum requirements.</p>
+                        <p>Our normal commission models still apply if you are successful in your proposal</p>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                {{ form_start(form, {'attr': {'class': 'dirty-check'}}) }}
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-8 col-xl-6">
+                            {{ form_widget(form) }}
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-success" disabled>Save</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

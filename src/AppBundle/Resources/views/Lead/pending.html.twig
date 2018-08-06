@@ -1,0 +1,63 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}New Leads{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th>Date Received</th>
+                            <th>UNIQUE ID</th>
+                            <th>Source</th>
+                            <th>Contact Name</th>
+                            <th>Contact Email</th>
+                            <th>Contact Phone</th>
+                            <th>Service</th>
+                            <th>Function</th>
+                            <th>Campaign Length</th>
+                            <th>Estimate Type</th>
+                            <th>Estimate Type Option</th>
+                            <th>Status</th>
+                            <th data-sortable="false"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for lead in leads %}
+                            <tr>
+                                <td>{{ lead.createdAt|date('d M Y H:i:s') }}</td>
+                                <td>{{ lead.uniqueID }}</td>
+                                <td>{{ lead.form.source}}</td>
+                                <td>{{ lead.contactName }}</td>
+                                <td>{{ lead.contactEmail }}</td>
+                                <td>{{ lead.contactPhone }}</td>
+                                <td>{{ lead.service }}</td>
+                                <td>
+                                    {% if lead.function|length %}
+                                        {% for function in lead.function %}
+                                            <p class="text-primary">{{ function }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+                                </td>
+                                <td>{{ lead.campaignLength }}</td>
+                                <td>{{ lead.estimateType }}</td>
+                                <td>{{ lead.estimateTypeOption }}</td>
+                                <td>{{ lead.status }}</td>
+                                <td>
+                                    <a class="btn bg-maroon btn-sm" href="{{ path('lead_approve', {'id': lead.id}) }}">View</a>
+                                    <a class="btn bg-purple btn-sm" href="{{ path('lead_sync', {'id' : lead.entryId}) }}">Sync</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

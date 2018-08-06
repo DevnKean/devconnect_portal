@@ -1,0 +1,61 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Campaigns{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-success">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th>Customer Name</th>
+                            <th>Services</th>
+                            <th>Campaign Name</th>
+                            <th>Commencement Date</th>
+                            <th>Total $ invoiced to customer</th>
+                            <th>Total $ Paid to CX Connect</th>
+                            <th>Agreement Expiry</th>
+                            <th>Customers last invoice date</th>
+                            <th>Customers next invoice date</th>
+                            <th>Last payment date made to CX Connect</th>
+                            <th>Next payment due Date</th>
+                            <th data-sortable="false"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for campaign in supplier.campaigns %}
+                            <tr>
+                                <td>{{ campaign.lead.businessName }}</td>
+                                <td>
+                                    {{ campaign.lead.service }}
+                                </td>
+                                <td>
+                                    {% for function in campaign.lead.function %}
+                                        <p>{{ function }}</p>
+                                    {% endfor %}
+                                </td>
+                                <td>{{ campaign.commencedAt|date }}</td>
+                                <td>{{ campaign.totalAmount|localizedcurrency('AUD') }}</td>
+                                <td>{{ campaign.totalCommission|localizedcurrency('AUD') }}</td>
+                                <td>{{ campaign.agreementExpiredAt ? campaign.agreementExpiredAt|date : '' }}</td>
+                                <td>{{ campaign.lastInvoiceReceivedDate ? campaign.lastInvoiceReceivedDate|date : ''}}</td>
+                                <td>{{ campaign.nextInvoiceIssueDate ? campaign.nextInvoiceIssueDate|date : '' }}</td>
+                                <td>{{ campaign.lastPaymentDate ? campaign.lastPaymentDate|date : '' }}</td>
+                                <td>{{ campaign.nextPaymentDueDate ? campaign.nextPaymentDueDate|date : '' }}</td>
+                                <td>
+                                    <a href="{{ path('campaign_edit', {'id' : campaign.id }) }}" class="btn btn-primary">Edit</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

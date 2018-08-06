@@ -1,0 +1,131 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Lead Summary{% endblock %}
+{% block page_subtitle %}REFERENCE NUMBER: {{ lead.uniqueID }}{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Lead Summary</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <div class="box-body">
+                    {% for id, field in leadData %}
+                        {% if id not in excludeIds %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">{{ field['question'] }}</div>
+                            <div class="panel-body">
+                                <ul>
+                                    {% for answer in field['answer'] %}
+                                        <li>{{ answer }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Your Lead Status</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    {{ form_start(leadForm) }}
+                    <div class="box-body">
+                        {{ form_widget(leadForm) }}
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-success pull-right">Save</button>
+                    </div>
+                    {{ form_end(leadForm) }}
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Lead Status Change Log</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    {% if leadStatusLogs| length %}
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th width="180">Date</th>
+                                <th>Status</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for leadStatusLog in leadStatusLogs %}
+                                <tr>
+                                    <td>{{ leadStatusLog.createdAt | date('d M Y H:i:s') }}</td>
+                                    <td>{{ leadStatusLog.status }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>No lead status change log yet</p>
+                    {% endif %}
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Add new internal note</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                {{ form_start(form) }}
+                <div class="box-body">
+                    {{ form_widget(form) }}
+                </div>
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-success pull-right">Save</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Internal Notes Log</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    {% if leadNotes| length %}
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th width="180">Date</th>
+                                <th>Notes</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for leadNote in leadNotes %}
+                                <tr>
+                                    <td>{{ leadNote.createdAt | date('d M Y H:i:s') }}</td>
+                                    <td>{{ leadNote.note }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p>No Lead History yet</p>
+                    {% endif %}
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

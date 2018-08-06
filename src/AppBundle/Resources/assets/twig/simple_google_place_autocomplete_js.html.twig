@@ -1,0 +1,7 @@
+<script>
+    function initMapAutocomplete() {
+        var inputId = "{{ form_view.vars['id'] }}";
+        var input = /** @type {!HTMLInputElement} */(document.getElementById(inputId));
+        new google.maps.places.Autocomplete(input);
+    }
+</script>

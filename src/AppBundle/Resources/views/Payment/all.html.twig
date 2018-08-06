@@ -1,0 +1,47 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Payments{% endblock %}
+
+{% block page_subtitle %}<a href="{{ path('payment_new') }}" class="btn btn-success btn-md">Create Payment</a>{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th>Invoice</th>
+                            <th>Amount</th>
+                            <th>Payment Date</th>
+                            <th>Status</th>
+                            <th data-sortable="false"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for payment in payments %}
+                                <tr>
+                                    <td>
+                                        {% for invoice in payment.invoices %}
+                                            <p>{{ invoice.xeroId }}</p>
+                                        {% endfor %}
+                                    </td>
+                                    <td>{{ payment.amount }}</td>
+                                    <td>{{ payment.paidAt|date('d M Y H:i:s') }}</td>
+                                    <td>{{ payment.status}}</td>
+                                    <td>
+                                        <a class="btn bg-purple btn-xs" href="{{ path('payment_edit', {'id': payment.id}) }}"><i class="fa fa-edit"></i></a>
+                                        {#<a class="btn btn-danger btn-xs" onclick="return confirm('Are you to remove this user (username: {{ user.username }})?');" href="{{ path('user_delete', {'id': user.id}) }}"><i class="fa fa-trash"></i></a>#}
+                                    </td>
+                                </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

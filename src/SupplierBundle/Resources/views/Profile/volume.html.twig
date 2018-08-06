@@ -1,0 +1,40 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Minimum Volumes{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '@Supplier/Profile/notification.html.twig' %}
+            {% include '@Supplier/Profile/feedback.html.twig' %}
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Customers are asked to use of one of the three methods to forecast volumes so please select the forecasted volumes you are interested in receiving leads for in each of the three columns below. <strong>You will only be sent leads for the boxes you have ticked.</strong></h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                {{ form_start(form, {'attr': {'class': 'dirty-check'}}) }}
+                <div class="box-body">
+                    <div class="col-sm-4">
+                        {{ form_row(form.inboundContacts, {'help': 'Please select the options for the forecasted inbound call volumes PER DAY you would like to receive leads for (tick all that apply)'}) }}
+                    </div>
+                    <div class="col-sm-4">
+                        {{ form_row(form.headcount,  {'help': 'Please select the options for the forecasted headcount you would like to receive leads for (tick all that apply)'}) }}
+                    </div>
+                    <div class="col-sm-4">
+                        {{ form_row(form.campaignData, {'help': 'Please select the options for the forecasted TOTAL campaign data you would like to receive leads for (tick all that apply). Please note data could include outbound calls, surveys etc.'}) }}
+                    </div>
+                </div>
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-success" disabled>Save</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

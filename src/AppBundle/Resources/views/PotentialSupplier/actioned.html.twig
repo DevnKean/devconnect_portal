@@ -1,0 +1,64 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}{{ status }} Potential Suppliers{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-success">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th>Unique ID</th>
+                            <th>Status</th>
+                            <th>Name</th>
+                            <th>Job Title</th>
+                            <th>Contact Number</th>
+                            <th>Business Name</th>
+                            <th>Email</th>
+                            <th>Address</th>
+                            <th>ABN Number</th>
+                            <th>Website</th>
+                            <th>Total number of contact centre seats</th>
+                            <th>Locations of your call centres</th>
+                            <th>Years of Operations</th>
+                            <th>Business Directory</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for supplier in potentialSuppliers %}
+                            <tr>
+                                <td>{{ supplier.uniqueID }}</td>
+                                <td>{{ supplier.status }}</td>
+                                <td>{{ supplier.prefix ~ ' ' ~ supplier.firstName ~ ' ' ~ supplier.lastName }}</td>
+                                <td>{{ supplier.jobTitle }}</td>
+                                <td>{{ supplier.contactNumber }}</td>
+                                <td>{{ supplier.businessName }}</td>
+                                <td>{{ supplier.email }}</td>
+                                <td>{{ supplier.address }}</td>
+                                <td>{{ supplier.abnNumber }}</td>
+                                <td>{{ supplier.website }}</td>
+                                <td>{{ supplier.totalSeats }}</td>
+                                <td>
+                                    {% for location in supplier.locations %}
+                                        <p>{{ location }}</p>
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {{ supplier.yearsOfOperations }}
+                                </td>
+                                <td>{{ supplier.businessDirectory }}</td>
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

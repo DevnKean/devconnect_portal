@@ -1,0 +1,194 @@
+{% import "ThemeBundle:layout:macros.html.twig" as macro %}
+<!doctype html>
+<!--[if lt IE 7 ]><html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]><html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]><html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]><html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>{{ title }}</title>
+
+    {# -------------------------------------------------------------------------------------------------- STYLESHEETS #}
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('bundles/theme/static/'~ app.environment ~'/styles/admin-lte-all.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/theme/css/style.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/theme/vendor/select2/dist/css/select2.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/theme/vendor/select2-bootstrap-theme/dist/select2-bootstrap.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/theme/vendor/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/theme/vendor/timepicker/bootstrap-timepicker.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/theme/vendor/yadcf/jquery.dataTables.yadcf.css') }}" />
+    {% endblock %}
+
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+    {# --------------------------------------------------------------------------------------------- JAVASCRIPTS_HEAD #}
+    {%  block javascripts_head %}
+        <script type="text/javascript" src="{{ asset('bundles/theme/static/'~app.environment~'/scripts/modernizr.js') }}"></script>
+        <!--[if lt IE 9]>
+
+        <![endif]-->
+
+    {% endblock %}
+
+</head>
+<body class="{{ admin_skin|default('skin-blue')}}">
+    <div class="wrapper">
+
+    {% block avanzu_admin_header %}
+        <header class="main-header">
+            {% block avanzu_logo %}
+                <div class="logo">
+                    <!-- Add the class icon to your logo image or logo icon to add the margining -->
+                    <img src="{{ asset('bundles/theme/img/logo.png') }}" width="150"/>
+                </div>
+            {% endblock %}
+            <!-- Header Navbar: style can be found in header.less -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                {% if app.user is not null and is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+                        <a class="btn btn-danger" href="{{ path('admin_dashboard', {'_switch_user': '_exit'}) }}">Exit impersonation</a>
+                    {% endif %}
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+                            {% block avanzu_navbar %}
+                                {{ render(controller('ThemeBundle:Navbar:messages')) }}
+                                {{ render(controller('ThemeBundle:Navbar:notifications')) }}
+                                {{ render(controller('ThemeBundle:Navbar:tasks')) }}
+                                {{ render(controller('ThemeBundle:Navbar:user')) }}
+                            {% endblock %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </nav>
+        </header>
+    {% endblock %}
+
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar sidebar-offcanvas">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                {% block avanzu_sidebar %}
+                    {% if app.user is not null and is_granted('IS_AUTHENTICATED_FULLY') %}
+                        {{ render(controller('ThemeBundle:Sidebar:userPanel')) }}
+                        {#{{ render(controller('ThemeBundle:Sidebar:searchForm')) }}#}
+                    {% endif %}
+                    {{ render(controller('ThemeBundle:Sidebar:menu', {'request':app.request})) }}
+                {% endblock %}
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Right side column. Contains the navbar and content of the page -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    {% block page_title %}Blank page{% endblock %}
+                    <small>{% block page_subtitle %}Control panel{% endblock %}</small>
+                </h1>
+                {#{% block avanzu_breadcrumb %}#}
+                    {#{{ render(controller('ThemeBundle:Breadcrumb:breadcrumb', {'request':app.request, 'title' : block('page_title')})) }}#}
+                {#{% endblock %}#}
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+                {% block flash_messages %}
+                    {% if app.session.flashbag.peekAll|length > 0 %}
+                        <div class="row">
+                            <div class="col-sm-12">
+                                {{ macro.session_flash(avanzu_adminlte_close_alert|default(false)) }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endblock flash_messages %}
+                {% block page_content %}{% endblock %}
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+
+    {% block avanzu_admin_footer %}
+        <footer class="main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Version</b> 1.0
+            </div>
+            <strong>Copyright &copy; 2017-2018 <a href="http://www.cxconnect.com">Connect</a>.</strong> All rights reserved.
+        </footer>
+    {% endblock %}
+
+    </div>
+<!-- ./wrapper -->
+
+{# ------------------------------------------------------------------------------------------------------ JAVASCRIPTS #}
+{% block javascripts %}
+
+    <script src="{{ asset('bundles/theme/static/'~app.environment~'/scripts/admin-lte-all.js') }}"></script>
+    <script src="{{ asset('bundles/theme/vendor/select2/dist/js/select2.min.js') }}"></script>
+    <script src="{{ asset('bundles/theme/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('bundles/theme/vendor/timepicker/bootstrap-timepicker.js') }}"></script>
+    <script src="{{ asset('js/jquery.collection.js') }}"></script>
+    <script src="{{ asset('bundles/theme/vendor/cleave.js/dist/cleave.js') }}"></script>
+    <script src="{{ asset('bundles/theme/vendor/dirrty/dist/jquery.dirrty.js') }}"></script>
+    <script src="{{ asset('bundles/theme/vendor/yadcf/src/jquery.dataTables.yadcf.js') }}"></script>
+    <script src="{{ asset('bundles/theme/vendor/ckeditor/ckeditor.js') }}"></script>
+{% endblock %}
+
+{# ----------------------------------------------------------------------------------------------- JAVASCRIPTS_INLINE #}
+{% block javascripts_inline %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var dataTable = $('.dataTable').DataTable({
+                paging: true,
+                pageLength: 50,
+                lengthChange: true,
+                searching: true,
+                ordering: true,
+                info: true,
+                autoWidth: true,
+                scrollX: true
+            });
+
+            $.fn.datepicker.defaults.autoclose = true;
+            $.fn.datepicker.defaults.todayHighlight = true;
+
+            $.fn.select2.defaults.set( "theme", "bootstrap" );
+            $('.select2').select2();
+            $('.timepicker').timepicker({
+                showInputs: false,
+                showMeridian: false
+            });
+
+            var dirtyCheck = $('.dirty-check').dirrty();
+            dirtyCheck.on('dirty', function() {
+                dirtyCheck.find('button[type=submit]').removeAttr('disabled');
+                // this function is called when the form.trigger's "clean"
+            }).on('clean', function() {
+                dirtyCheck.find('button[type=submit]').attr('disabled', 'disabled');
+            });
+
+            $('.reply').click(function (e) {
+                $.get('entry/' + $(this).data('entry-id') + '/reply',
+                    function (data) {
+                        $('#replyModal').find('.modal-body').html(data);
+                        $('#replyModal').modal('show');
+                        CKEDITOR.replace('form_reply');
+                    }
+                )
+            })
+        })
+    </script>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,39 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Communications{% endblock %}
+{% block page_subtitle %}{{ user.username }}{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Subject</th>
+                            <th>Content</th>
+                            <th>Admin</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for communication in communications %}
+                            <tr>
+                                <td>{{ communication.createdAt|date('Y-m-d H:i:s') }}</td>
+                                <td>{{ communication.type }}</td>
+                                <td>{{ communication.subject }}</td>
+                                <td>{{ communication.content| raw}}</td>
+                                <td>{{ communication.admin }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

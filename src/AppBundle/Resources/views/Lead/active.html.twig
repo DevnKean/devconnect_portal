@@ -1,0 +1,69 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Active Leads{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th>UNIQUE ID</th>
+                            <th>Date Submitted</th>
+                            <th>Business Name</th>
+                            <th>Contact Name</th>
+                            <th>Contact Email</th>
+                            <th>Contact Phone</th>
+                            <th>Allocated Suppliers</th>
+                            <th>Winning Supplier</th>
+                            <th>Service</th>
+                            <th>Functions</th>
+                            <th>Type of Lead</th>
+                            <th>Status</th>
+                            <th data-sortable="false"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for lead in leads %}
+                            <tr>
+                                <td>{{ lead.uniqueID }}</td>
+                                <td>{{ lead.createdAt|date }}</td>
+                                <td>{{ lead.businessName}}</td>
+                                <td>{{ lead.contactName }}</td>
+                                <td>{{ lead.contactEmail }}</td>
+                                <td>{{ lead.contactPhone }}</td>
+                                <td>
+                                    {% if lead.leadSuppliers | length %}
+                                        {% for leadSupplier in lead.leadSuppliers %}
+                                        <p class="text-default">{{ leadSupplier.supplier }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+                                </td>
+                                <td>{{ lead.getWinningSupplier }}</td>
+                                <td>{{ lead.service }}</td>
+                                <td>
+                                    {% if lead.function|length %}
+                                        {% for function in lead.function %}
+                                            <p class="text-primary">{{ function }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+                                </td>
+                                <td>{{ lead.type }}</td>
+                                <td>{{ lead.status }}</td>
+                                <td>
+                                    <a class="btn bg-green btn-sm" href="{{ path('lead_manage', {'id': lead.id}) }}">Manage</a>
+                                    <a class="btn bg-purple btn-sm" href="{{ path('lead_sync', {'id' : lead.entryId}) }}">Sync</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

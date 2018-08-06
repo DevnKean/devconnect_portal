@@ -1,0 +1,44 @@
+{% for invoice in invoices %}
+    <div class="panel panel-default">
+        <div class="panel-heading">Invoice (XERO ID: {{ invoice.xeroId }}) </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-sm-4"><strong>Created At</strong></div>
+                <div class="col-sm-8"><p>{{ invoice.createdAt|date }}</p></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"><strong>Supplier</strong></div>
+                <div class="col-sm-8"><p>{{ invoice.supplier }}</p></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"><strong>Lead</strong></div>
+                <div class="col-sm-8"><p>{{ invoice.lead }}</p></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"><strong>Amount of Customer Invoice ($)</strong></div>
+                <div class="col-sm-8"><p>{{ invoice.supplierInvoice.total| localizedcurrency('AUD') }}</p></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"><strong>Tier Level</strong></div>
+                <div class="col-sm-8"><p>{{ invoice.tierLevel }}</p></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"><strong>Commission Rate</strong></div>
+                <div class="col-sm-8"><p>{{ (invoice.commissionRate * 100)| number_format(2)}}%</p></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"><strong>Commissions ($)</strong></div>
+                <div class="col-sm-8"><p>{{ (invoice.commission) | localizedcurrency('AUD') }}</p></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"><strong>CX Connect invoice due date</strong></div>
+                <div class="col-sm-8"><p>{{ invoice.dueAt| date }}</p></div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"><strong>Next invoice due to be issued on</strong></div>
+                <div class="col-sm-8"><p>{{ invoice.nextInvoiceIssueAt|date }}</p></div>
+            </div>
+        </div>
+    </div>
+
+{% endfor %}

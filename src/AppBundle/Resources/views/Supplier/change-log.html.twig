@@ -1,0 +1,102 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %} {{ supplier }} {{ profile.name|capitalize}} - {{ supplierProfile.status }}  {% endblock %}
+{% block page_subtitle %}
+    <div class="btn-group">
+        <a class="btn btn-success {{ ((supplierProfile.status == constant('AppBundle\\Entity\\SupplierProfile::STATUS_APPROVED') and readyToApprovalCount == 0 ) or readyForFeedbackCount > 0 ) ? 'disabled': '' }}" href="{{ path('supplier_profile_update', {'id': supplier.id, 'profileId': profile.id, 'status': constant('AppBundle\\Entity\\SupplierProfile::STATUS_APPROVED')}) }}">Approve Profile Section ({{ readyToApprovalCount }})</a>
+        <a class="btn bg-orange {{ supplierProfile.status == constant('AppBundle\\Entity\\SupplierProfile::STATUS_PENDING') or readyForFeedbackCount > 0 ? 'disabled': '' }}" href="{{ path('supplier_profile_update', {'id': supplier.id, 'profileId': profile.id, 'status': constant('AppBundle\\Entity\\SupplierProfile::STATUS_PENDING')}) }}">Pending ({{ pendingReviewCount }})</a>
+        <a class="btn bg-purple {{ supplierProfile.status == constant('AppBundle\\Entity\\SupplierProfile::STATUS_FEEDBACK') and readyForFeedbackCount == 0 ? 'disabled': '' }}" href="{{ path('supplier_profile_update', {'id': supplier.id, 'profileId': profile.id, 'status': constant('AppBundle\\Entity\\SupplierProfile::STATUS_FEEDBACK')}) }}">Send Feedback ({{ readyForFeedbackCount }})</a>
+    </div>
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-success">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    {% if entries is defined and entries | length > 0 %}
+                        <div class="row" >
+                            <div class="col-sm-12" style="display: flex; justify-content: flex-end">
+                                <a href="{{ path('supplier_profile_approveAll', {'id': supplier.id, 'profileId': profile.id}) }}" class="btn btn-success btn-sm" style="margin-bottom: 10px">Approve All</a>
+                            </div>
+                        </div>
+                        <table class="table table-bordered table-striped dataTable" data-order="[[ 0, &quot;desc&quot; ]]">
+                        <thead>
+                        <tr>
+                            <th width="14%">Date</th>
+                            <th>User</th>
+                            <th width="45%">Message</th>
+                            <th>Feedback Status</th>
+                            <th width="30%">Feedback</th>
+                            <th width="30%">Supplier Reply</th>
+                            <th data-orderable="false">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for entry in entries %}
+                            <tr data-entry-id="{{ entry.id }}">
+                                <td>{{ entry.loggedAt | date('d M Y g:i a') }}</td>
+                                <td>{{ entry.username }} ({{ supplier }})</td>
+                                <td>{{ entry.message|raw }}</td>
+                                <td>{{ entry.feedbackStatus }}</td>
+                                <td>{{ entry.feedback|raw }}</td>
+                                <td>{{ entry.supplierReply|raw }}</td>
+                                <td>
+                                    {% if  entry.feedbackStatus is not constant('AppBundle\\Entity\\LogEntry::STATUS_APPROVED') and entry.feedbackStatus is not constant('AppBundle\\Entity\\LogEntry::STATUS_FEEDBACK') %}
+                                    <a href="{{ path('supplier_entry_approve', {'id': supplier.id, 'entryId': entry.id}) }}" class="btn {{ entry.feedbackStatus is constant('AppBundle\\Entity\\LogEntry::STATUS_READY_FOR_APPROVAL') ? 'btn-warning' : 'btn-success'}}  btn-xs approve">
+                                        <i class="fa fa-check-circle"></i> {{ entry.feedbackStatus is constant('AppBundle\\Entity\\LogEntry::STATUS_READY_FOR_APPROVAL') ? 'Approved pending' : 'Approve'}}
+                                    </a>
+                                    <button type="button" class="btn {{ entry.feedbackStatus is constant('AppBundle\\Entity\\LogEntry::STATUS_READY_FOR_FEEDBACK') ? 'btn-warning' : 'btn-info'}}  btn-xs feedback" data-entry-id="{{ entry.id }}" data-supplier-id="{{ supplier.id }}" data-toggle="modal">
+                                        <i class="fa fa-plus"></i> {{ entry.feedbackStatus is constant('AppBundle\\Entity\\LogEntry::STATUS_READY_FOR_FEEDBACK') ? 'Feedback Ready' : 'Add Feedback'}}
+                                    </button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                        <h3>No activity log available</h3>
+                    {% endif %}
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Add Feedback</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+                {#<div class="modal-footer">#}
+                    {#<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+                {#</div>#}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts_inline %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.feedback').click(function (e) {
+                $.get('/suppliers/' + $(this).data('supplier-id') + '/entry/' + $(this).data('entry-id') + '/feedback',
+                    function (data) {
+                        console.log(data);
+                        $('#feedbackModal').find('.modal-body').html('').html(data);
+
+                        $('#feedbackModal').modal('show');
+                        CKEDITOR.replace('form_feedback');
+                    }
+                )
+            })
+        })
+    </script>
+{% endblock %}

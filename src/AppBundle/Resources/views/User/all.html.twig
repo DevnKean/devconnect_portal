@@ -1,0 +1,66 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Users{% endblock %}
+
+{% block page_subtitle %}<a href="{{ path('user_create') }}" class="btn btn-success btn-md">Create User</a>{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Supplier</th>
+                            <th>Role</th>
+                            <th>Job Title</th>
+                            <th>Is Active</th>
+                            <th>Communications</th>
+                            <th>Date Created</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                            {% if not user.isSuperAdmin %}
+                                <tr>
+                                    <td>{{ user.firstName }}</td>
+                                    <td>{{ user.lastName }}</td>
+                                    <td>{{ user.username }}</td>
+                                    <td>{{ user.email}}</td>
+                                    <td>{{ user.supplier }}</td>
+                                    <td>
+                                        {% for role in user.roles %}
+                                            {{ user.roleName(role) }}
+                                        {% endfor %}
+                                    </td>
+                                    <td>{{ user.jobTitle }}</td>
+                                    <td>{{ user.isActive }}</td>
+                                    <td><a href="{{ path('user_communications', {'id' : user.id}) }}">View communications</a></td>
+                                    <td>{{ user.createdAt|date }}</td>
+                                    <td>
+                                        <a class="btn bg-purple btn-xs" href="{{ path('user_edit', {'id': user.id}) }}" title="view"><i class="fa fa-eye"></i></a>
+                                        <a class="btn btn-danger btn-xs" onclick="return confirm('Are you to remove this user (username: {{ user.username }})?');" href="{{ path('user_delete', {'id': user.id}) }}" title="delete"><i class="fa fa-trash"></i></a>
+                                        {% if user.supplier.potentialSupplier is not empty %}
+                                            <a class="btn btn-info btn-xs" href="{{ path('user_email', {'id': user.id}) }}" title="supplier_email"><i class="fa fa-envelope"></i></a>
+                                        {% endif %}
+                                        <a class="btn btn-warning btn-xs" href="{{ path('supplier_reset_password', {'id': user.id}) }}" title="reset_password"><i class="fa fa-key"></i></a>
+                                        <a class="btn bg-olive btn-sm" href="{{ path('supplier_dashboard') }}?_switch_user={{ user.username }}">Access account</a>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

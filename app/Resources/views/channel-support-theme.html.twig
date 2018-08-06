@@ -1,0 +1,28 @@
+{% block ChannelSupportType_widget %}
+    <div class="row {{ form.type.vars.value | lower }}">
+        {{ form_row(form.type) }}
+        <div class="col-sm-3">
+            {% if form.type.vars.value == constant('AppBundle\\Entity\\ChannelSupport::TYPE_DEFAULT') %}
+                <div class="form-group"><h4>{{ form.channel.vars.value }}</h4></div>
+                <div class="hidden">
+                    {{ form_row(form.channel) }}
+                </div>
+            {% else %}
+                {{ form_row(form.channel, {'label' : 'Custom Channel Name'}) }}
+            {% endif %}
+        </div>
+        <div class="col-sm-3">
+            {{ form_row(form.experienceLevel) }}
+        </div>
+        <div class="col-md-2" style="margin-top: 25px;">
+            <div class="form-group">
+                {% if form.type.vars.value == constant('AppBundle\\Entity\\ChannelSupport::TYPE_DEFAULT') %}
+                    <a href="#" class="collection-remove"></a>
+                {% else %}
+                    <button type="button" class="collection-remove btn btn-danger" title="Delete element"><i class="fa fa-trash"></i></button>
+                {% endif %}
+            </div>
+            {#<a href="#" class="collection-add btn btn-default" title="Add element"><i class="glyphicon glyphicon-plus-sign"></i></a>#}
+        </div>
+    </div>
+{% endblock %}

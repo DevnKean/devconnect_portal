@@ -1,0 +1,35 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Create Supplier Invoice{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-6">
+            {{ form_start(form) }}
+            <!-- form start -->
+            <div class="box box-primary">
+                <!-- /.box-header -->
+
+                <div class="box-body">
+                    {{ form_widget(form) }}
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary pull-right">Create</button>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts_inline %}
+    {{ parent() }}
+    <script type="text/javascript">
+        new Cleave('#appbundle_supplierinvoice_total', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
+        });
+    </script>
+{% endblock %}

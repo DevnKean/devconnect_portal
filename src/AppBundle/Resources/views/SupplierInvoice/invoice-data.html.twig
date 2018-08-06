@@ -1,0 +1,63 @@
+<div class="row">
+    <div class="col-sm-4"><strong>Supplier</strong></div>
+    <div class="col-sm-8"><p>{{ supplier }}</p></div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4"><strong>ABN Number</strong></div>
+    <div class="col-sm-8"><p>{{ supplier.abnNumber }}</p></div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4"><strong>Supplier Address</strong></div>
+    <div class="col-sm-8"><p>{{ supplier.address }}</p></div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4"><strong>Supplier Reference number</strong></div>
+    <div class="col-sm-8"><p>{{ supplierInvoice.referenceNumber }}</p></div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4"><strong>Invoice Contact</strong></div>
+    <div class="col-sm-8"><p>{{ supplier.invoiceContact.details }}</p></div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4"><strong>Customer</strong></div>
+    <div class="col-sm-8"><p>{{ supplierInvoice.leadSupplier.lead.businessName }}</p></div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4"><strong>Amount ex GST</strong></div>
+    <div class="col-sm-8"><p>{{ amount|localizedcurrency('AUD') }}</p></div>
+</div>
+<div class="row">
+    <div class="col-sm-4"><strong>Commission Rate</strong></div>
+    <div class="col-sm-8"><p>{{ (commissionRate * 100)| number_format(2) }}%</p></div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4"><strong>Commission ex GST</strong></div>
+    <div class="col-sm-8"><p>{{ commission|localizedcurrency('AUD') }}</p></div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4"><strong>Tier Level</strong></div>
+    <div class="col-sm-8"><p><a href="{{ path('commission_models', {'id': tier.commissionModel.id}) }}" target="_blank">{{ tier.tierLevel }}</a></p></div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4"><strong>Contract Payment Terms</strong></div>
+    <div class="col-sm-8"><p>{{ contactPaymentTerm }}</p></div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4"><strong>CX Connect payment due date</strong></div>
+    <div class="col-sm-8"><p>{{ supplierInvoice.paymentDueDate|date }}</p></div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4"><strong>Customer to pay supplier date</strong></div>
+    <div class="col-sm-8"><p>{{ supplierInvoice.paymentDueAt| date }}</p></div>
+</div>

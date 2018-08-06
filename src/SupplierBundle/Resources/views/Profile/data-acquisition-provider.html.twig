@@ -1,0 +1,63 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Data Acquisition Provider{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+    {% form_theme form 'jquery.collection.html.twig' %}
+    <div class="row">
+        <div class="col-sm-6">
+            {% include '@Supplier/Profile/notification.html.twig' %}
+            {% include '@Supplier/Profile/feedback.html.twig' %}
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        Please provide your preferred list or data providers
+                    </h3>
+                </div>
+                <!-- form start -->
+                {{ form_start(form, {'attr': {'class': 'dirty-check', 'novalidate' : 'novalidate'}}) }}
+                <div class="box-body">
+                   {{ form_widget(form.dataAcquisitionProviders) }}
+                </div>
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-success" disabled>Save</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts_inline %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var collections = [];
+        $('.provider-collection').collection({
+            add: '<button type="button" class="btn btn-success">Add another provider</button>',
+            remove: '<button type="button" class="btn btn-danger pull-right">Remove</button>',
+            allow_add: true,
+            allow_remove: true,
+            allow_up: false,
+            allow_down: false,
+            add_at_the_end: true,
+            after_init: function (collection) {
+                collection.children().each(function (index, element) {
+                    collections.push($(element).attr('id'))
+                })
+            },
+            after_add: function(collection, element) {
+                $('.dirty-check').find('button[type=submit]').removeAttr('disabled');
+                return true;
+            },
+            after_remove: function(collection, element) {
+                $('.dirty-check').find('button[type=submit]').removeAttr('disabled');
+                return true;
+            }
+        });
+    </script>
+{% endblock %}

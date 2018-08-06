@@ -1,0 +1,56 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Contacts{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+    {% form_theme form 'jquery.collection.html.twig' 'contact-theme.html.twig' %}
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '@Supplier/Profile/notification.html.twig' %}
+            {% include '@Supplier/Profile/feedback.html.twig' %}
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        {% if supplier.outSourcing %}
+                        <p>{{ constant('AppBundle\\Entity\\Contact::TYPE_PRIMARY')|upper  }} - The owner of the contract with CX Connect</p>
+                        <p>{{ constant('AppBundle\\Entity\\Contact::TYPE_INVOICE')|upper  }} - The person we should notify for new leads along with any updates for each lead</p>
+                        <p>{{ constant('AppBundle\\Entity\\Contact::TYPE_LEAD')|upper  }} - The person we should notify for new leads along with any updates for each lead</p>
+                        <p>{{ constant('AppBundle\\Entity\\Contact::TYPE_PROFILE_UPDATE')|upper  }} - Our main liaison point to ensure your profile sections are completed and maintained</p>
+                        {% endif %}
+                        {% if supplier.virtualAssistant %}
+                            <p>Please provide your contact details. These will be used to notify you of new leads, invoice enquiries as well as notifications for profile changes etc</p>
+                        {% endif %}
+                    </h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                {{ form_start(form, {'attr': {'class' : 'dirty-check'}}) }}
+                <div class="box-body">
+                    {{ form_widget(form) }}
+                </div>
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-success pull-right" disabled>Save</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts_inline %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $('.copy-contact').click(function() {
+            var primaryRow = $('.primary-contact');
+            var contactRow = $(this).closest('div.row')
+            contactRow.find('.first-name').val(primaryRow.find('.first-name').val());
+            contactRow.find('.last-name').val(primaryRow.find('.last-name').val());
+            contactRow.find('.email').val(primaryRow.find('.email').val());
+            contactRow.find('.work-phone').val(primaryRow.find('.work-phone').val());
+            contactRow.find('.mobile-phone').val(primaryRow.find('.mobile-phone').val());
+        });
+    </script>
+{% endblock %}

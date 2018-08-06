@@ -1,0 +1,21 @@
+supplier:
+    resource: "@SupplierBundle/Controller/"
+    type:     annotation
+    prefix:   /supplier
+#    schemes: ['https']
+
+theme:
+    resource: "@ThemeBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+ #   schemes: ['https']
+
+avanzu_admin:
+    resource: "@ThemeBundle/Resources/config/routes.yml"
+
+logout:
+    path: /logout

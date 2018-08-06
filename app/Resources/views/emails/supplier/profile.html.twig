@@ -1,0 +1,6 @@
+{% extends ':emails:layout.html.twig' %}
+{% block content %}
+    <p>Hi Admin,</p>
+    <p>The supplier <strong>{{ supplier }}</strong> has updated their profile section <strong>{{ profile.name }}</strong> and it is now pending your approval</p>
+    <p><a href="{{ absolute_url(path('login')) }}">Log In</a></p>
+{% endblock %}

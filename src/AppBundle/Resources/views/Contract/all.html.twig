@@ -1,0 +1,67 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Contracts{% endblock %}
+{% block page_subtitle %}<a href="{{ url('contract_create') }}" class="btn btn-success btn-md">Create Contract</a>{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th>Date Entered</th>
+                            <th>Company</th>
+                            <th>Services</th>
+                            <th>Contract Status</th>
+                            <th>Account Status</th>
+                            <th>Date Sent</th>
+                            <th>Date Received</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Payment Term</th>
+                            <th>View Contract</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for contract in contracts %}
+                            <tr>
+                                <td>{{ contract.createdAt ?  contract.createdAt| date: '' }}</td>
+                                <td>{{ contract.supplier.businessName }}</td>
+                                <td>
+                                    {% for contractService in contract.contractServices %}
+                                        <span class="label label-success">{{ contractService.service }}</span>
+                                    {% endfor %}
+                                </td>
+                                <td>{{ contract.status }}</td>
+                                <td>{{ contract.supplier.status }}</td>
+                                <td>{{ contract.sentAt? contract.sentAt|date : '' }}</td>
+                                <td>
+                                    {% if contract.receivedAt %}
+                                        {{ contract.receivedAt| date }}
+                                    {% endif %}
+                                </td>
+                                <td>{{ contract.startDate?  contract.startDate|date: '' }}</td>
+                                <td>{{ contract.endDate? contract.endDate|date : '' }}</td>
+                                <td>{{ contract.paymentTerm }}</td>
+                                <td>
+                                    {% if contract.file %}
+                                        <a href="{{ asset('uploads/' ~ contract.file) }}" target="_blank">View Contract (PDF)</a>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a class="btn bg-purple btn-xs" href="{{ path('contract_edit', {'id' : contract.id}) }}" ><i class="fa fa-edit"></i></a>
+                                    <a class="btn bg-red btn-xs" href="{{ path('contract_delete', {'id' : contract.id}) }}" onclick="return confirm('Are you to remove this contract?');"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

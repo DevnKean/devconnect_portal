@@ -1,0 +1,189 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Suppliers{% endblock %}
+{% block page_subtitle %}<a href="{{ path('supplier_create') }}" class="btn btn-success btn-md">Create Supplier</a>{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Contract Status</h3>
+        </div>
+        <div class="col-lg-2 col-xs-2">
+
+            <!-- small box -->
+            <div class="small-box bg-purple">
+                <div class="inner">
+                    <h3>{{ contractNeedToPrepareCount }}</h3>
+                    <p>Need to send</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-xs-2">
+            <!-- small box -->
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <h3>{{ contractSentCount }}</h3>
+                    <p>Contract Sent</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-xs-2">
+            <!-- small box -->
+            <div class="small-box bg-gray">
+                <div class="inner">
+                    <h3>{{ notStartedSupplier }}</h3>
+                    <p>Not Started</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-xs-2">
+            <!-- small box -->
+            <div class="small-box bg-orange">
+                <div class="inner">
+                    <h3>{{ pendingSupplier }}</h3>
+                    <p>Pending</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-xs-2">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>{{ approvedSupplier }}</h3>
+                    <p>Approved</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3 col-xs-3">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>{{ approvedCount }}</h3>
+                    <p>Approved profiles</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-3">
+            <!-- small box -->
+            <div class="small-box bg-orange">
+                <div class="inner">
+                    <h3>{{ pendingCount }}</h3>
+                    <p>Pending profiles</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-3">
+            <!-- small box -->
+            <div class="small-box bg-blue">
+                <div class="inner">
+                    <h3>{{ feedbackCount }}</h3>
+                    <p>Feedback profiles</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-3">
+            <!-- small box -->
+            <div class="small-box bg-gray">
+                <div class="inner">
+                    <h3>{{ notStartedCount }}</h3>
+                    <p>Not Started profiles</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-success">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th>Supplier ID</th>
+                            <th>Business Name</th>
+                            <th>Trading Name</th>
+                            <th>Total Leads Allocated</th>
+                            <th>Total Leads Won</th>
+                            <th>Winning Conversion</th>
+                            <th>Supplier Earnings</th>
+                            <th>Commissions</th>
+                            <th>Account Status</th>
+                            <th>Contract Status</th>
+                            <th>Profile Status</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for supplier in suppliers %}
+                            {% if  supplier.profileOverallStatus is constant('AppBundle\\Entity\\SupplierProfile::STATUS_APPROVED') and supplier.isApproved %}
+                                {% set bgClass = '#b7ffdd' %}
+                            {% elseif supplier.profileOverallStatus is constant('AppBundle\\Entity\\SupplierProfile::STATUS_PENDING') and supplier.isApproved %}
+                                {% set bgClass = '#ffd3ad' %}
+                            {% elseif supplier.contract and supplier.contract.status is constant('AppBundle\\Entity\\Contract::STATUS_SENT') %}
+                                {% set bgClass = '#fbb8af' %}
+                            {% elseif supplier.contract and supplier.contract.status is constant('AppBundle\\Entity\\Contract::STATUS_NEED_TO_PREPARE') %}
+                                {% set bgClass = '#aba7fb' %}
+                            {% else %}
+                                {% set bgClass = '' %}
+                            {% endif %}
+                            <tr style="background-color: {{ bgClass }};">
+                                <td>{{ supplier.id }}</td>
+                                <td>{{ supplier.businessName }}</td>
+                                <td>{{ supplier.tradingName }}</td>
+                                <td>{{ supplier.allocatedLeads | length }}</td>
+                                <td>{{ supplier.campaigns | length }}</td>
+                                <td>{{ "%winningConversion%%"|replace({'%winningConversion%': supplier.winningConversion * 100}) }}</td>
+
+                                <td>{{ supplier.earnings|localizedcurrency('AUD') }}</td>
+                                <td>{{ supplier.commissions|localizedcurrency('AUD') }}</td>
+                                <td>{{ supplier.status }}</td>
+                                <td>{{ supplier.contractStatus }}</td>
+                                <td>
+                                    {% for k,v in supplier.profileStatusCount %}
+                                        <p> {{ v }} {{ k|upper }}</p>
+                                    {% endfor %}
+                                </td>
+                                <td>
+                                    {#<a class="btn bg-purple btn-xs" href="{{ path('supplier_edit', {'id': supplier.id}) }}"><i class="fa fa-edit"></i></a>#}
+                                    <a class="btn bg-orange btn-xs" href="{{ path('supplier_view', {'id': supplier.id}) }}"><i class="fa fa-eye"></i></a>
+                                    <a class="btn bg-red btn-xs" onclick="return confirm('Are you sure to delete this supplier ({{ supplier }}), you will lost all related data');" href="{{ path('supplier_delete', {'id': supplier.id}) }}"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

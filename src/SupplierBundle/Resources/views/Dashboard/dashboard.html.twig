@@ -1,0 +1,147 @@
+{% extends "@Theme/layout/base-layout.html.twig" %}
+
+{% block page_title %} {{ user.supplier.businessName }} Dashboard {% endblock %}
+{% block page_subtitle %} Supplier ID: {{ user.supplier.id }} {% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>{{ supplier.allocatedLeads|length }}</h3>
+                    <p>Total Leads</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow-gradient">
+                <div class="inner">
+                    <h3>{{ supplier.campaigns|length }}</h3>
+                    <p>Active Campaign</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>{{ supplier.earnings|localizedcurrency('AUD') }}</h3>
+                    <p>Total Revenue</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-purple">
+                <div class="inner">
+                    <h3>{{ supplier.commissions|localizedcurrency('AUD') }}</h3>
+                    <p>Total Commissions</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        {% if supplier.contract | length %}
+            <div class="col-md-6">
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Contract Information</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                        <!-- /.box-tools -->
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label>Contract Start Date:</label>
+                                <span>{{ supplier.contract.startDate | date }}</span>
+                            </div>
+                            <div class="col-xs-12">
+                                <label>Contract Expiry Date:</label>
+                                <span>{{ supplier.contract.endDate | date }}</span>
+                            </div>
+                            <div class="col-xs-12">
+                                <label>Days until contract expires:</label>
+                                <span>{{ supplier.contract.daysLeft }}</span>
+                            </div>
+                            <div class="col-xs-12">
+                                <label>Contract:</label>
+                                <span><a href="{{ asset('uploads/' ~ supplier.contract.file) }}">View Contract (PDF)</a></span>
+                            </div>
+                            <div class="col-xs-12">
+                                <label>Commission Model:</label>
+                                <span><button type="button" data-toggle="modal"
+                                              data-target="#commissionModel">View</button></span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                </div>
+                <!-- /.box -->
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="commissionModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Commission Model</h4>
+                        </div>
+                        <div class="modal-body">
+                            {% for contractService in supplier.contract.contractServices %}
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th data-sortable="false">Tier</th>
+                                        <th>Lower threshold</th>
+                                        <th>Upper threshold</th>
+                                        <th>Rate year 1</th>
+                                        <th>Rate year 2</th>
+                                        <th>Rate year 3</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for tier in contractService.commissionModel.commissionTiers %}
+                                        <tr>
+                                            <td>{{ tier.tierLevel }}</td>
+                                            <td>{{ tier.lowerThreshold| localizedcurrency('AUD') }}</td>
+                                            <td>{{ tier.upperThreshold ? tier.upperThreshold| localizedcurrency('AUD') : '' }}</td>
+                                            <td>{{ (tier.rateYearOne * 100)|number_format(2) }}%</td>
+                                            <td>{{ (tier.rateYearTwo * 100)|number_format(2) }}%</td>
+                                            <td>{{ (tier.rateYearThree * 100)|number_format(2) }}%</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% endfor %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

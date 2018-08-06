@@ -1,0 +1,72 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Leads{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>{{ leadSuppliers | length }}</h3>
+                    <p>New Leads</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Leads</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th>Date received</th>
+                            <th>Lead Reference Number</th>
+                            <th>Service</th>
+                            <th>Function</th>
+                            <th>Type of Lead</th>
+                            <th>Company Name</th>
+                            <th>Contact Name</th>
+                            <th>Contact Number</th>
+                            <th>Notes from Connect>>></th>
+                            <th data-sortable="false"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for leadSupplier in leadSuppliers %}
+                            <tr>
+                                <td>{{ leadSupplier.allocatedDate | date }}</td>
+                                <td>{{ leadSupplier.lead.uniqueID }}</td>
+                                <td>{{ leadSupplier.lead.service }}</td>
+                                <td>
+                                    {% if leadSupplier.lead.function|length %}
+                                        {% for function in leadSupplier.lead.function %}
+                                            <p class="text-primary">{{ function }}</p>
+                                        {% endfor %}
+                                    {% endif %}
+                                </td>
+                                <td>{{ leadSupplier.lead.type }}</td>
+                                <td>{{ leadSupplier.lead.businessName }}</td>
+                                <td>{{ leadSupplier.lead.contactName }}</td>
+                                <td>{{ leadSupplier.lead.contactPhone }}</td>
+                                <td>{{ leadSupplier.notesToOutsourcer }}</td>
+                                <td><a class="btn btn-orange" href="{{ url('supplier_lead_edit', {'id' : leadSupplier.lead.id}) }}">Manage Lead</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

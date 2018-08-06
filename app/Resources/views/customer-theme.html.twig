@@ -1,0 +1,48 @@
+{% block CustomerType_row %}
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Customer</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="collection-remove btn btn-danger btn-sm" title="Delete element"><i class="fa fa-trash"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <div class="box-body">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-6">
+                        {{ form_row(form.name) }}
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-6">
+                        {{ form_row(form.industryVertical) }}
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-6">
+                        {{ form_row(form.functions) }}
+                    </div>
+                </div>
+                <div class="row">
+                    {% if form.totalSeats is defined %}
+                    <div class="col-sm-12 col-md-12 col-lg-6">
+                        {{ form_row(form.totalSeats, {'help': 'Please provide the total number of seats used by this customer'}) }}
+                    </div>
+                    {% endif %}
+                    {% if form.percentageOfBusiness is defined  %}
+                    <div class="col-sm-12 col-md-12 col-lg-6">
+                        {{ form_row(form.percentageOfBusiness, {'help': 'Please provide an estimate of what proportion of your business is attributed to this customer'}) }}
+                    </div>
+                    {% endif %}
+                    <div class="col-sm-12 col-md-12 col-lg-6">
+                        {{ form_row(form.workPeriod) }}
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-6">
+                        {{ form_row(form.locations) }}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

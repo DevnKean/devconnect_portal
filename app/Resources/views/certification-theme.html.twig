@@ -1,0 +1,24 @@
+{% block CertificationType_widget %}
+    <div class="row ">
+        <div class="col-sm-3">
+            {{ form_row(form.name) }}
+            {{ form_row(form.number) }}
+        </div>
+        <div class="col-sm-5">
+            {{ form_row(form.description) }}
+        </div>
+        <div class="col-sm-1" style="margin-top: 25px;">
+            <button type="button" class="collection-remove btn btn-danger" title="Delete element"><i class="fa fa-trash"></i></button>
+            {#<a href="#" class="collection-add btn btn-default" title="Add element"><i class="glyphicon glyphicon-plus-sign"></i></a>#}
+        </div>
+        {#<div class="col-md-2">#}
+        {#<a href="#" class="collection-up btn btn-default" title="Move element up"><i class="glyphicon glyphicon-arrow-up"></i></a>#}
+        {#<a href="#" class="collection-down btn btn-default" title="Move element down"><i class="glyphicon glyphicon-arrow-down"></i></a>#}
+        {#</div>#}
+
+        {#<div class="col-md-2">#}
+        {#<a href="#" class="collection-duplicate btn btn-default" title="Duplicate element"><i class="glyphicon glyphicon-th-large"></i></a>#}
+        {#</div>#}
+    </div>
+{% endblock %}
+

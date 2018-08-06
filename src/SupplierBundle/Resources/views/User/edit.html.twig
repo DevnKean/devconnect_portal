@@ -1,0 +1,25 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Edit User{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="box box-success">
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    {{ form_start(form) }}
+                        <div class="box-body">
+                            {{ form_widget(form) }}
+                        </div>
+                        <!-- /.box-body -->
+
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary pull-right">Update</button>
+                        </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Archived Leads{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th>Date received</th>
+                            <th>Lead Reference Number</th>
+                            <th>Service</th>
+                            <th>Company Name</th>
+                            <th>Contact Name</th>
+                            <th>Contact Number</th>
+                            <th>Reason Lost</th>
+                            <th>Lost reason note to Supplier</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for leadSupplier in leadSuppliers %}
+                            <tr>
+                                <td>{{ leadSupplier.allocatedDate | date }}</td>
+                                <td>{{ leadSupplier.lead.uniqueID }}</td>
+                                <td>{{ leadSupplier.lead.service }}</td>
+                                <td>{{ leadSupplier.lead.businessName }}</td>
+                                <td>{{ leadSupplier.lead.contactName }}</td>
+                                <td>{{ leadSupplier.lead.contactPhone }}</td>
+                                <td>{{ leadSupplier.lostReason }}</td>
+                                <td>{{ leadSupplier.lostReasonNotes }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

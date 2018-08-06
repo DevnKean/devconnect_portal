@@ -1,0 +1,11 @@
+{% extends 'emails/layout.html.twig' %}
+{% block content %}
+    <p>Hi {{ contact.firstName }},</p>
+
+    <p>On reviewing your <strong>{{ profile }}</strong> profile section we need some further clarity to ensure we can allocate the right type of leads to you.</p>
+
+    <p>Please <a href="http://portal.cxconnect.com.au/login">login to your dashboard</a> to review the message and action as required.</p>
+
+    <p>Kind regards, </p>
+{% endblock %}
+

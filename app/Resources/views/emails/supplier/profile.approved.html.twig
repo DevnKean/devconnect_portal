@@ -1,0 +1,10 @@
+{% extends 'emails/layout.html.twig' %}
+{% block content %}
+    <p>Hi {{ contact.firstName }},</p>
+
+    <p>This is a courtesy email to let you know that your <strong>{{ profile }}</strong> profile section has been approved.</p>
+
+    <p>You can <a href="http://portal.cxconnect.com.au/login">login to your dashboard</a> at anytime to review and remember you can update your profile at any time.</p>
+
+    <p>Kind regards,</p>
+{% endblock %}

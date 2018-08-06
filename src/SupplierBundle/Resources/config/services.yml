@@ -1,0 +1,7 @@
+services:
+#    supplier.example:
+#        class: SupplierBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    activity_log.formatter:
+        class: AppBundle\Service\ActivityLog\ActivityLogFormatter
+        arguments: ["@logger", "@doctrine.orm.default_entity_manager"]

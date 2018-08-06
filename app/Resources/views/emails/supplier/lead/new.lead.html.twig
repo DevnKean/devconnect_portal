@@ -1,0 +1,6 @@
+{% extends ':emails:layout.html.twig' %}
+{% block content %}
+    <p>Hi {{ leadSupplier.supplier.leadContact.name }},</p>
+    <p>Great news, a new lead has just been allocated to {{ leadSupplier.supplier }}. Please log into <a href="{{ absolute_url(url('login')) }}">your dashboard</a> to view the details.</p>
+    <p>If you've got any questions just call us on 1300 292 368 or email us at support@cxconnect.com.au<p>
+{% endblock %}

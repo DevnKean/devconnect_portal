@@ -1,0 +1,47 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Supplier Invoices{% endblock %}
+{% block page_subtitle %}<a href="{{ url('supplier_invoices_new') }}" class="btn btn-success btn-md">Create Supplier Invoice</a>{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-success">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th>Reference Number</th>
+                            <th>Supplier</th>
+                            <th>Lead</th>
+                            <th>Invoice total ex GST</th>
+                            <th>Date the Supplier issued invoice to customer</th>
+                            <th>Date the Supplier invoice was received by CX Connect</th>
+                            <th>Due date for customer payment to Supplier</th>
+                            <th>Invoice</th>
+                            <th data-sortable="false"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for supplierInvoice in supplierInvoices %}
+                            <tr>
+                                <td>{{ supplierInvoice.referenceNumber}}</td>
+                                <td>{{ supplierInvoice.leadSupplier.supplier}}</td>
+                                <td>{{ supplierInvoice.leadSupplier.lead}}</td>
+                                <td>{{ supplierInvoice.total| localizedcurrency('AUD') }}</td>
+                                <td>{{ supplierInvoice.issuedAt|date}}</td>
+                                <td>{{ supplierInvoice.receivedAt| date }}</td>
+                                <td>{{ supplierInvoice.paymentDueAt| date }}</td>
+                                <td><a href="{{ asset('uploads/' ~ supplierInvoice.file) }}">View Supplier Invoice (PDF)</a></td>
+                                <td><a class="btn bg-purple btn-xs" href="{{ path('supplier_invoices_edit', {'id' : supplierInvoice.id}) }}"><i class="fa fa-edit"></i></a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

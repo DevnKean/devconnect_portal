@@ -1,0 +1,18 @@
+{% block ContractServiceType_label %}{% endblock %}
+{% block ContractServiceType_errors %}{% endblock %}
+
+{% block ContractServiceType_row %}
+    <div class="row" style="display: flex; align-items: flex-end">
+        <div class="col-sm-4">
+            {{ form_row(form.service) }}
+        </div>
+        <div class="col-sm-4">
+            {{ form_row(form.commissionModel) }}
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                <button type="button" class="collection-remove btn btn-danger"><i class="fa fa-trash"></i></button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

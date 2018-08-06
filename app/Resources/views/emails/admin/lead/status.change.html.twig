@@ -1,0 +1,5 @@
+{% extends ':emails:layout.html.twig' %}
+{% block content %}
+    <p>Hi Admin,</p>
+    <p>Please note <strong>{{ leadSupplier.supplier }}</strong> has just changed the status on the {{ leadSupplier.lead }} from <strong>{{ originalStatus }}</strong> to <strong>{{ leadSupplier.leadStatus }}</strong>.</p>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Legals{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+    {% form_theme form 'jquery.collection.html.twig' 'certification-theme.html.twig' %}
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '@Supplier/Profile/notification.html.twig' %}
+            {% include '@Supplier/Profile/feedback.html.twig' %}
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Please confirm your professional insurances if applicable</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                {{ form_start(form, {'attr': {'class': 'dirty-check'}}) }}
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            {% if form.professionalIndemnity is defined %}
+                            {{ form_row(form.professionalIndemnity) }}
+                            {% endif %}
+                            {% if form.publicLiability is defined %}
+                            {{ form_row(form.publicLiability) }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    {{ form_row(form.certifications) }}
+                </div>
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-success" disabled>Update</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts_inline %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $('.certification-collection').collection({
+            add: '<button type="button" class="btn bg-orange">Add another certification</button>',
+            remove: '<button type="button" class="btn btn-danger pull-right">Remove</button>',
+            allow_add: true,
+            allow_remove: true,
+            allow_up: false,
+            allow_down: false,
+            add_at_the_end: true,
+            after_add: function(collection, element) {
+                $('.dirty-check').find('button[type=submit]').removeAttr('disabled');
+                return true;
+            },
+            after_remove: function(collection, element) {
+                $('.dirty-check').find('button[type=submit]').removeAttr('disabled');
+                return true;
+            }
+        });
+
+        new Cleave('.input-professionalIndemnity', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
+        });
+
+        new Cleave('.input-publicLiability', {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
+        });
+    </script>
+{% endblock %}

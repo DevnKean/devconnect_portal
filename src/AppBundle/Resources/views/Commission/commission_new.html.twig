@@ -1,0 +1,39 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}New Commission{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="box box-success">
+                <!-- form start -->
+                {{ form_start(form) }}
+                <div class="box-body">
+                    {{ form_widget(form) }}
+                </div>
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary pull-right">Create</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts_inline %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $('#appbundle_commissionmodel_isFlatRate').change(function () {
+            if ($(this).is(':checked')) {
+                $('#appbundle_commissionmodel_file').closest('.form-group').hide();
+                $('#appbundle_commissionmodel_flatRate').closest('.form-group').show();
+            } else {
+                $('#appbundle_commissionmodel_file').closest('.form-group').show();
+                $('#appbundle_commissionmodel_flatRate').closest('.form-group').hide();
+            }
+        }).change();
+    </script>
+{% endblock %}

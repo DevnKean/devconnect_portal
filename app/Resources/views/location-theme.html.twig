@@ -1,0 +1,156 @@
+{% block LocationType_row %}
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Location</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="collection-remove btn btn-danger btn-sm" title="Delete element"><i class="fa fa-trash"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        <div class="box-body">
+            <div class="col-sm-7">
+                <h3>Your Location Details:</h3>
+                <div class="row">
+                    <div class="col-sm-12">
+                        {{ form_row(form.address) }}
+                        {{ form_row(form.yearsOpen) }}
+                        {% if form.totalSeats is defined %}
+                        {{ form_row(form.totalSeats) }}
+                        {% endif %}
+                        {% if form.availableSeats is defined %}
+                        {{ form_row(form.availableSeats) }}
+                        {% endif %}
+                        {% if form.operateFrom is defined %}
+                            {{ form_row(form.operateFrom) }}
+                        {% endif %}
+                        {% if form.conductIn is defined %}
+                            {{ form_row(form.conductIn) }}
+                        {% endif %}
+                        {% if form.noiseCancelling is defined %}
+                            {{ form_row(form.noiseCancelling) }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-7 col-xs-12">
+                <h3>Your Standard Operational Hours:</h3>
+                <div class="row" style="display: flex; align-items: center">
+                    <div class="col-md-4 col-xs-12">
+                        {{ form_row(form.isMondayClosed) }}
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                        {{ form_row(form.mondayOpenTime) }}
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                        {{ form_row(form.mondayCloseTime) }}
+                    </div>
+                    <div class="col-md-2 col-xs-12">
+                        {% if form.isMondayOpen24Hours is defined %}
+                            {{ form_row(form.isMondayOpen24Hours) }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row" style="display: flex; align-items: center">
+                    <div class="col-md-4 col-xs-12">
+                        {{ form_row(form.isTuesdayClosed) }}
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                        {{ form_row(form.tuesdayOpenTime) }}
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                        {{ form_row(form.tuesdayCloseTime) }}
+                    </div>
+                    <div class="col-md-2 col-xs-12">
+                        {% if form.isTuesdayOpen24Hours is defined %}
+                            {{ form_row(form.isTuesdayOpen24Hours) }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row" style="display: flex; align-items: center">
+                    <div class="col-md-4 col-xs-12">
+                        {{ form_row(form.isWednesdayClosed) }}
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                        {{ form_row(form.wednesdayOpenTime) }}
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                        {{ form_row(form.wednesdayCloseTime) }}
+                    </div>
+                    <div class="col-md-2 col-xs-12">
+                        {% if form.isWednesdayOpen24Hours is defined %}
+                            {{ form_row(form.isWednesdayOpen24Hours) }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row" style="display: flex; align-items: center">
+                    <div class="col-md-4 col-xs-12">
+                        {{ form_row(form.isThursdayClosed) }}
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                        {{ form_row(form.thursdayOpenTime) }}
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                        {{ form_row(form.thursdayCloseTime) }}
+                    </div>
+                    <div class="col-md-2 col-xs-12">
+                        {% if form.isThursdayOpen24Hours is defined %}
+                            {{ form_row(form.isThursdayOpen24Hours) }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row" style="display: flex; align-items: center">
+                    <div class="col-md-4 col-xs-12">
+                        {{ form_row(form.isFridayClosed) }}
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                        {{ form_row(form.fridayOpenTime) }}
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                        {{ form_row(form.fridayCloseTime) }}
+                    </div>
+                    <div class="col-md-2 col-xs-12">
+                        {% if form.isFridayOpen24Hours is defined %}
+                            {{ form_row(form.isFridayOpen24Hours) }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row" style="display: flex; align-items: center">
+                    <div class="col-md-4 col-xs-12">
+                        {{ form_row(form.isSaturdayClosed) }}
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                        {{ form_row(form.saturdayOpenTime) }}
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                        {{ form_row(form.saturdayCloseTime) }}
+                    </div>
+                    <div class="col-md-2 col-xs-12">
+                        {% if form.isSaturdayOpen24Hours is defined %}
+                            {{ form_row(form.isSaturdayOpen24Hours) }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row" style="display: flex; align-items: center">
+                    <div class="col-md-4 col-xs-12">
+                        {{ form_row(form.isSundayClosed) }}
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                        {{ form_row(form.sundayOpenTime) }}
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                        {{ form_row(form.sundayCloseTime) }}
+                    </div>
+                    <div class="col-md-2 col-xs-12">
+                        {% if form.isSundayOpen24Hours is defined %}
+                            {{ form_row(form.isSundayOpen24Hours) }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,13 @@
+services:
+    AppBundle\Command\GooglePlaceAutocompleteLibraryCommand:
+        arguments:
+            - '@twig'
+            - '%cethyworks.google_place_autocomplete.google_api_key%'
+
+    AppBundle\Form\Extension\GooglePlaceAutocompleteInjectorAwareTypeExtension:
+        arguments:
+            - '@Cethyworks\ContentInjectorBundle\EventSubscriber\ContentInjectorSubscriber'
+            - '@AppBundle\Command\GooglePlaceAutocompleteLibraryCommand'
+        tags:
+            # priority -10 ensure call after InjectorAwareTypeExtension
+            - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType, priority: -10 }

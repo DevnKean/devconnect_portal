@@ -1,0 +1,50 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Clients{% endblock %}
+{% block page_subtitle %}<a href="{{ path('client_new') }}" class="btn btn-success btn-md">Create Client</a>{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-success">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>Job Title</th>
+                            <th>Company</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for client in clients %}
+                            <tr>
+                                <td>{{ client.firstName }}</td>
+                                <td>{{ client.lastName }}</td>
+                                <td>{{ client.phone }}</td>
+                                <td>{{ client.email }}</td>
+                                <td>{{ client.mobile}}</td>
+                                <td>{{ client.jobTitle }}</td>
+                                <td>{{ client.company }}</td>
+                                <td>{{ client.status }}</td>
+                                <td>
+                                    <a class="btn bg-purple btn-xs" href="{{ path('client_view', {'id': client.id}) }}"><i class="fa fa-eye"></i></a>
+                                    <a class="btn bg-red btn-xs" onclick="return confirm('Are you sure to delete this client ({{ client }}), you will lost all related data');" href="{{ path('client_delete', {'id': client.id}) }}"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

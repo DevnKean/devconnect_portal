@@ -1,0 +1,57 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Campaigns{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-success">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable" data-srcollX="true">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Business Name</th>
+                            <th>Contact Name</th>
+                            <th>Contact Email</th>
+                            <th>Contact Phone</th>
+                            <th>Winning Supplier</th>
+                            <th>Commencement Date</th>
+                            <th>Total $ invoiced to customer</th>
+                            <th>Total commission paid</th>
+                            <th>Agreement Expiry</th>
+                            <th>Last Invoice Date to Customer</th>
+                            <th>Next invoice due date to customer</th>
+                            <th>Last payment made to CCC</th>
+                            <th>Next payment due Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for campaign in campaigns %}
+                            <tr>
+                                <td>{{ campaign.id }}</td>
+                                <td>{{ campaign.lead.businessName}}</td>
+                                <td>{{ campaign.lead.contactName }}</td>
+                                <td>{{ campaign.lead.contactEmail }}</td>
+                                <td>{{ campaign.lead.contactPhone }}</td>
+                                <td>{{ campaign.supplier }}</td>
+                                <td>{{ campaign.commencedAt|date }}</td>
+                                <td>{{ campaign.totalAmount|localizedcurrency('AUD') }}</td>
+                                <td>{{ campaign.totalCommission|localizedcurrency('AUD') }}</td>
+                                <td>{{ campaign.agreementExpiredAt ? campaign.agreementExpiredAt|date : '' }}</td>
+                                <td>{{ campaign.lastInvoiceReceivedDate ? campaign.lastInvoiceReceivedDate|date : ''}}</td>
+                                <td>{{ campaign.nextInvoiceIssueDate ? campaign.nextInvoiceIssueDate|date : '' }}</td>
+                                <td>{{ campaign.lastPaymentDate ? campaign.lastPaymentDate|date : '' }}</td>
+                                <td>{{ campaign.nextPaymentDueDate ? campaign.nextPaymentDueDate|date : '' }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

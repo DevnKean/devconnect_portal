@@ -1,0 +1,19 @@
+{% if status is constant('AppBundle\\Entity\\SupplierProfile::STATUS_FEEDBACK') %}
+    <div class="alert bg-purple alert-dismissible">
+        <h4><i class="icon fa fa-warning"></i> Feedback</h4>
+        You need to action the feedback below on your recent changes. Either update the information and click 'save' at the bottom of this page or respond directly to Admin by clicking the 'reply' button.
+        {#To view more details, please go to <a href="{{ path('log_profile', {'id' : profile.id}) }}" >change log</a>#}
+    </div>
+{% endif %}
+{% if status is constant('AppBundle\\Entity\\SupplierProfile::STATUS_APPROVED') %}
+    <div class="alert alert-success alert-dismissible">
+        <h4><i class="icon fa fa-check"></i> Approved</h4>
+        You profile has been approved.
+    </div>
+{% endif %}
+{% if status is constant('AppBundle\\Entity\\SupplierProfile::STATUS_PENDING') %}
+    <div class="alert alert-warning alert-dismissible">
+        <h4><i class="icon fa fa-info"></i> Pending</h4>
+        Thank you, your profile has now been submitted for approval. Once approved your status will change to 'approved' or we will send you feedback if further clarification is required
+    </div>
+{% endif %}

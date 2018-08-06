@@ -1,0 +1,401 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Dashboard{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-lg-12">
+            <form class="pull-right" method="post" id="filterForm">
+                <div class="form-group">
+                    <label>Date range</label>
+                    <input type="hidden" name="startDate" id="startDate" value="{{ startDate is defined ? startDate | date : '' }}">
+                    <input type="hidden" name="endDate" id="endDate" value="{{ endDate is defined ? endDate | date : '' }}">
+                    <div class="input-group">
+                        <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+                            {% if startDate is defined %}
+                                <span>{{ startDate |date }} - {{ endDate | date }}</span>
+                            {% else %}
+                            <span>ALL Time</span>
+                            {% endif %}
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+<div class="row">
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>{{ leads| length }}</h3>
+                <p>Total Leads</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow-gradient">
+            <div class="inner">
+                <h3>{{ campaign| length }}</h3>
+                <p>Total Campaigns</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3>{{ revenue| localizedcurrency('AUD') }}</h3>
+                <p>Total Revenues</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-purple">
+            <div class="inner">
+                <h3>{{ commission| localizedcurrency('AUD') }}</h3>
+                <p>Total Commissions</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+        <div class="col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>{{ leadConversion| localizednumber('percent') }}</h3>
+                    <p>Leads Conversion</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow-gradient">
+                <div class="inner">
+                    <h3>{{ potentialSupplier| length }}</h3>
+                    <p>New Potential Supplier</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Contract</h3>
+        </div>
+        <div class="col-lg-2 col-xs-2">
+            <!-- small box -->
+            <div class="small-box bg-purple">
+                <div class="inner">
+                    <h3>{{ contractNeedToPrepareCount }}</h3>
+                    <p>Prepare contract</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-xs-2">
+            <!-- small box -->
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <h3>{{ contractSentCount }}</h3>
+                    <p>Contract Sent</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2 col-xs-2">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>{{ contractApprovedCount }}</h3>
+                    <p>Contract Approved</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Profile Section</h3>
+        </div>
+        <div class="col-lg-3 col-xs-3">
+            <!-- small box -->
+            <div class="small-box bg-orange">
+                <div class="inner">
+                    <h3>{{ pendingCount }}</h3>
+                    <p>Pending admin approval</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-3">
+            <!-- small box -->
+            <div class="small-box bg-gray">
+                <div class="inner">
+                    <h3>{{ notStartedCount }}</h3>
+                    <p>Not Started profiles</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-3">
+            <!-- small box -->
+            <div class="small-box bg-gray">
+                <div class="inner">
+                    <h3>{{ feedbackCount }}</h3>
+                    <p>Pending supplier feedback</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-3">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>{{ approvedCount }}</h3>
+                    <p>Approved profiles</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="row">
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Profile Update Needs Approval</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                    <!-- /.box-tools -->
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th>Business Name</th>
+                            <th>Profile Name</th>
+                            <th>Status</th>
+                            <th data-sortable="false"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for supplierProfile in supplierProfiles %}
+                            <tr>
+                                <td>{{ supplierProfile.supplier}}</td>
+                                <td>{{ supplierProfile.profile}}</td>
+                                <td>{{ supplierProfile.status }}</td>
+                                <td><a class="btn bg-purple btn-xs" href="{{ path('supplier_activity_log', {'id': supplierProfile.supplier.id, 'slug': supplierProfile.profile.slug}) }}"><i class="fa fa-edit"></i> View</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">New Leads</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+                <!-- /.box-tools -->
+                <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <table class="table table-bordered table-striped dataTable">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Business Name</th>
+                        <th>Contact Name</th>
+                        <th>Contact Email</th>
+                        <th>Contact Phone</th>
+                        <th>Status</th>
+                        <th data-sortable="false"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for lead in pendingLeads %}
+                        <tr>
+                            <td>{{ lead.id }}</td>
+                            <td>{{ lead.businessName}}</td>
+                            <td>{{ lead.contactName }}</td>
+                            <td>{{ lead.contactEmail }}</td>
+                            <td>{{ lead.contactPhone }}</td>
+                            <td>{{ lead.status }}</td>
+                            <td><a class="btn bg-purple btn-xs" href="{{ path('lead_approve', {'id': lead.id}) }}"><i class="fa fa-edit"></i> view</a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </div>
+</div>
+
+<div class="row">
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Overdue Payments</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Business Name</th>
+                            <th>Lead</th>
+                            <th>Amount</th>
+                            <th>Due Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for payment in overDuePayments %}
+                            <tr>
+                                <td>{{ payment.xeroId }}</td>
+                                <td>{{ payment.supplierInvoice.leadSupplier.supplier}}</td>
+                                <td>{{ payment.supplierInvoice.leadSupplier.lead }}</td>
+                                <td>{{ (payment.commission) | localizedcurrency('AUD') }}</td>
+                                <td>{{ payment.dueAt | date }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+<div class="row">
+        <div class="col-md-12">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Overdue Invoices</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                    <!-- /.box-tools -->
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th>Business Name</th>
+                            <th>Lead</th>
+                            <th>Due Date</th>
+                            <th>Last invoice received date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for leadSupplier in overDueInvoices %}
+                            <tr>
+                                <td>{{ leadSupplier.supplier}}</td>
+                                <td>{{ leadSupplier.lead }}</td>
+                                <td>{{ leadSupplier.nextInvoiceIssueDate|date  }}</td>
+                                <td>{{ leadSupplier.lastInvoiceReceivedDate|date  }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts_inline %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var picker = $('#daterange-btn');
+
+            picker.daterangepicker(
+                {
+                    ranges   : {
+                        'Today'       : [moment(), moment()],
+                        'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                        'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                        'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+                        'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    },
+                    startDate: moment( new Date(2017, 9, 22), 'DD MMM YYYY'),
+                    endDate  : moment( new Date(), 'DD MMM YYYY')
+                },
+                function (start, end) {
+                    $('#daterange-btn span').html(start.format('DD MMM YYYY') + ' - ' + end.format('DD MMM YYYY'))
+                }
+            )
+
+            picker.on('apply.daterangepicker', function(ev, picker) {
+                $('#startDate').val(picker.startDate.format('DD MMM YYYY'));
+                $('#endDate').val(picker.endDate.format('DD MMM YYYY'));
+                $('#filterForm').submit();
+            });
+        });
+
+    </script>
+{% endblock %}

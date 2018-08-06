@@ -1,0 +1,188 @@
+# Learn more about services, parameters and containers at
+# https://symfony.com/doc/current/service_container.html
+imports:
+    - { resource: "@ThemeBundle/Resources/config/services.yml" }
+
+parameters:
+    #parameter_name: value
+
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        # automatically injects dependencies in your services
+        autowire: true
+        # automatically registers your services as commands, event subscribers, etc.
+        autoconfigure: true
+        # this means you cannot fetch services directly from the container via $container->get()
+        # if you need to do this, you can override this setting on individual services
+        public: false
+
+    # makes classes in src/AppBundle available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    AppBundle\:
+        resource: '../../src/AppBundle/*'
+        # you can exclude directories or files
+        # but if a service is unused, it's removed anyway
+        exclude: '../../src/AppBundle/{Entity,Repository,Tests}'
+
+    # controllers are imported separately to make sure they're public
+    # and have a tag that allows actions to type-hint services
+    AppBundle\Controller\:
+        resource: '../../src/AppBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    SupplierBundle\Controller\:
+        resource: '../../src/SupplierBundle/Controller'
+        public: true
+        tags: ['controller.service_arguments']
+
+    app.login_listener:
+        class: AppBundle\EventListener\LoginListener
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }
+        arguments: ['@router','@security.authorization_checker', '@event_dispatcher']
+
+    AppBundle\Service\FileUploader:
+        arguments:
+            $targetDir: '%upload_directory%'
+
+    AppBundle\Service\LeadProcessor:
+        arguments:
+            $manager: '@doctrine.orm.entity_manager'
+
+    twig.extension.intl:
+        class: Twig_Extensions_Extension_Intl
+        tags:
+            - { name: twig.extension }
+
+    twig.extension.date:
+        class: Twig_Extensions_Extension_Date
+        tags:
+            - { name: twig.extension }
+        arguments: []
+
+    AppBundle\Service\GravityClient:
+        arguments:
+            $host: '%cxcentral.host%'
+            $publicKey: '%cxcentral.public_key%'
+            $privateKey: '%cxcentral.private_key%'
+
+    app.formatter.contact:
+        class: AppBundle\Service\ActivityFormatter\Contact
+        tags:
+            - { name: activity_log.formatter, entity: 'Contact'}
+
+    app.formatter.reference:
+        class: AppBundle\Service\ActivityFormatter\Reference
+        tags:
+            - { name: activity_log.formatter, 'entity': 'Reference'}
+
+    app.formatter.support.function:
+        class: AppBundle\Service\ActivityFormatter\SupportFunction
+        tags:
+            - { name: activity_log.formatter, 'entity': 'SupportFunction'}
+
+    app.formatter.minimum.volume:
+        class: AppBundle\Service\ActivityFormatter\MinimumVolume
+        tags:
+            - { name: activity_log.formatter, 'entity': 'MinimumVolume'}
+
+    app.formatter.channel.support:
+        class: AppBundle\Service\ActivityFormatter\ChannelSupport
+        tags:
+            - { name: activity_log.formatter, 'entity': 'ChannelSupport'}
+
+    app.formatter.technology:
+        class: AppBundle\Service\ActivityFormatter\Technology
+        tags:
+            - { name: activity_log.formatter, 'entity': 'Technology'}
+
+    app.formatter.location:
+        class: AppBundle\Service\ActivityFormatter\Location
+        tags:
+            - { name: activity_log.formatter, 'entity': 'Location'}
+
+    app.formatter.location.timetable:
+        class: AppBundle\Service\ActivityFormatter\LocationTimetable
+        tags:
+            - { name: activity_log.formatter, 'entity': 'LocationTimetable'}
+
+    app.formatter.experience:
+        class: AppBundle\Service\ActivityFormatter\Experience
+        tags:
+            - { name: activity_log.formatter, 'entity': 'Experience'}
+
+    app.formatter.commercial:
+        class: AppBundle\Service\ActivityFormatter\Commercial
+        tags:
+            - { name: activity_log.formatter, 'entity': 'Commercial'}
+
+    app.formatter.award:
+        class: AppBundle\Service\ActivityFormatter\Award
+        tags:
+            - { name: activity_log.formatter, 'entity': 'Award'}
+
+    app.formatter.customer:
+        class: AppBundle\Service\ActivityFormatter\Customer
+        tags:
+            - { name: activity_log.formatter, 'entity': 'Customer'}
+
+    app.formatter.certification:
+        class: AppBundle\Service\ActivityFormatter\Certification
+        tags:
+            - { name: activity_log.formatter, 'entity': 'Certification'}
+
+    app.formatter.supplier:
+        class: AppBundle\Service\ActivityFormatter\Supplier
+        tags:
+            - { name: activity_log.formatter, 'entity': 'Supplier'}
+
+    app.formatter.data.acquisition:
+        class: AppBundle\Service\ActivityFormatter\DataAcquisition
+        tags:
+            - { name: activity_log.formatter, 'entity': 'DataAcquisition'}
+
+    app.formatter.data.acquisition.provider:
+        class: AppBundle\Service\ActivityFormatter\DataAcquisitionProvider
+        tags:
+            - { name: activity_log.formatter, 'entity': 'DataAcquisitionProvider'}
+
+    app.formatter.tender:
+        class: AppBundle\Service\ActivityFormatter\Tender
+        tags:
+            - { name: activity_log.formatter, 'entity': 'Tender'}
+
+    app.formatter.workfromhome:
+        class: AppBundle\Service\ActivityFormatter\WorkFromHome
+        tags:
+            - { name: activity_log.formatter, 'entity': 'WorkFromHome'}
+
+    AppBundle\Form\LocationType:
+        arguments: ['@security.token_storage']
+        tags: [form.type]
+
+    AppBundle\Form\TechnologyType:
+        arguments: ['@security.token_storage']
+        tags: [form.type]
+
+    AppBundle\Form\ChannelSupportType:
+        arguments: ['@security.token_storage']
+        tags: [form.type]
+
+    AppBundle\Form\CommercialType:
+        arguments: ['@security.token_storage']
+        tags: [form.type]
+
+    AppBundle\Form\DataAcquisitionType:
+        arguments: ['@security.token_storage']
+        tags: [form.type]
+
+    AppBundle\Form\CustomerType:
+        arguments: ['@security.token_storage']
+        tags: [form.type]
+    # add more services, or override services that need manual wiring
+    # AppBundle\Service\ExampleService:
+    #     arguments:
+    #         $someArgument: 'some_value'

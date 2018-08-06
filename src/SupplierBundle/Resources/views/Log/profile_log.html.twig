@@ -1,0 +1,45 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %} {{ supplier }} {{ profile.name|capitalize}} - {{ supplierProfile.status }}  {% endblock %}
+{% block page_subtitle %}
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-success">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    {% if entries | length %}
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>User</th>
+                                <th>Message</th>
+                                <th>Feedback</th>
+                                <th>Supplier Reply</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for entry in entries %}
+                                <tr data-entry-id="{{ entry.id }}">
+                                    <td>{{ entry.loggedAt | date('d M Y g:i a') }}</td>
+                                    <td>{{ entry.username }} ({{ supplier }})</td>
+                                    <td>{{ entry.message|raw }}</td>
+                                    <td>{{ entry.feedback }}</td>
+                                    <td>{{ entry.supplierReply }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <h3>No activity log available</h3>
+                    {% endif %}
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

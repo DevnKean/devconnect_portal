@@ -1,0 +1,65 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Work From Home/Remote Workforce{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+    {% form_theme form 'jquery.collection.html.twig' 'workfromhome-theme.html.twig' %}
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '@Supplier/Profile/notification.html.twig' %}
+            {% include '@Supplier/Profile/feedback.html.twig' %}
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Please provide information about your Work From Home/Remote workforce</h3>
+                </div>
+
+                <!-- /.box-header -->
+                <!-- form start -->
+                {{ form_start(form, {'attr': {'class': 'dirty-check',  'novalidate' : 'novalidate'}}) }}
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            {{ form_widget(form) }}
+                        </div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+
+                {#<div class="box-footer">#}
+                    {#<button type="submit" class="btn btn-primary">Save</button>#}
+                {#</div>#}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts_inline %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var collections = [];
+        $('.workfromhome-collection').collection({
+            add: '<button type="button" class="btn btn-success">Add another</button>',
+            remove: '<button type="button" class="btn btn-danger pull-right">Remove</button>',
+            allow_add: true,
+            allow_remove: true,
+            allow_up: false,
+            allow_down: false,
+            add_at_the_end: true,
+            after_init: function (collection) {
+                collection.children().each(function (index, element) {
+                    collections.push($(element).attr('id'))
+                })
+            },
+            after_add: function(collection, element) {
+                element.find('select').select2().trigger('change');
+                $('.dirty-check').find('button[type=submit]').removeAttr('disabled');
+                return true;
+            },
+            after_remove: function(collection, element) {
+                $('.dirty-check').find('button[type=submit]').removeAttr('disabled');
+                return true;
+            }
+        })
+    </script>
+{% endblock %}

@@ -1,0 +1,68 @@
+#services:
+#    theme.example:
+#        class: ThemeBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
+
+parameters:
+    avanzu_admin_theme.navbar_user_listener.class: ThemeBundle\EventListener\NavbarShowUserDemoListener
+    avanzu_admin_theme.navbar_task_listener.class: ThemeBundle\EventListener\NavbarTaskListDemoListener
+    avanzu_admin_theme.navbar_notify_listener.class: ThemeBundle\EventListener\NavbarNotificationListDemoListener
+    avanzu_admin_theme.navbar_msg_listener.class: ThemeBundle\EventListener\NavbarMessageListDemoListener
+    avanzu_admin_theme.setup_menu_listener.class: ThemeBundle\EventListener\SidebarSetupMenuDemoListener
+    avanzu_admin_theme.exception_controller.class: ThemeBundle\Controller\ExceptionController
+    twig.controller.exception.class: ThemeBundle\Controller\ExceptionController
+    avanzu_admin_theme.widget_extension.class: ThemeBundle\Twig\WidgetExtension
+    avanzu_admin_theme.theme_manager.class: ThemeBundle\Theme\ThemeManager
+    avanzu_admin_theme.setup_theme_listener.class: ThemeBundle\EventListener\SetupThemeListener
+    avanzu_admin_theme.dependency_resolver.class: ''
+    avanzu_admin_theme.css_base: ''
+    avanzu_admin_theme.lte_admin: ''
+    my_admin_bundle.show_user_listener.class: ThemeBundle\EventListener\ShowUserListener
+    my_admin_bundle.menu_listener.class: ThemeBundle\EventListener\MenuItemListListener
+    my_admin_bundle.breadcrumb_listener.class: ThemeBundle\EventListener\MenuItemListListener
+
+services:
+    avanzu_admin_theme.exception_controller:
+        class: %avanzu_admin_theme.exception_controller.class%
+        arguments: ['@twig', '%kernel.debug%']
+    avanzu_admin_theme.widget_extension.class:
+        class: %avanzu_admin_theme.widget_extension.class%
+        tags:
+            - { name: twig.extension }
+    avanzu_admin_theme.theme_manager:
+        class: %avanzu_admin_theme.theme_manager.class%
+        arguments: ['@service_container', '%avanzu_admin_theme.dependency_resolver.class%']
+    avanzu_admin_theme.setup_theme_listener:
+        class: %avanzu_admin_theme.setup_theme_listener.class%
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+        arguments: ['@avanzu_admin_theme.theme_manager', '%avanzu_admin_theme.css_base%', '%avanzu_admin_theme.lte_admin%']
+
+    avanzu_admin_theme.context_listener:
+        class: ThemeBundle\EventListener\ContextListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
+        arguments: ['@service_container']
+
+    theme_bundle.show_user_listener:
+        class: ThemeBundle\EventListener\ShowUserListener
+        arguments:
+            - '@service_container'
+        tags:
+            - { name: kernel.event_listener, event: theme.navbar_user, method: onShowUser }
+            - { name: kernel.event_listener, event: theme.sidebar_user, method: onShowUser }
+        # ...
+    theme_bundle.menu_listener:
+        class: ThemeBundle\EventListener\MenuItemListListener
+        arguments:
+            - '@service_container'
+        tags:
+            - { name: kernel.event_listener, event:theme.sidebar_setup_menu, method:onSetupMenu }
+
+    theme_bundle.breadcrumb_listener:
+        class: ThemeBundle\EventListener\MenuItemListListener
+        arguments:
+            - '@service_container'
+        tags:
+            - { name: kernel.event_listener, event:theme.breadcrumb, method:onSetupMenu }
+

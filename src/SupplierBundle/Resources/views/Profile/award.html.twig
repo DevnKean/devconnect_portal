@@ -1,0 +1,93 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Award{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+    {% form_theme form 'jquery.collection.html.twig' %}
+    <div class="row">
+        <div class="col-sm-6">
+            {% include '@Supplier/Profile/notification.html.twig' %}
+            {% include '@Supplier/Profile/feedback.html.twig' %}
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        {% if supplier.outSourcing %}
+                            Please advise of any awards your business has won
+                        {% endif %}
+                        {% if supplier.virtualAssistant %}
+                            Please advise of any awards you have won
+                        {% endif %}
+                    </h3>
+                </div>
+                <!-- form start -->
+                {{ form_start(form, {'attr': {'class': 'dirty-check', 'novalidate' : 'novalidate'}}) }}
+                <div class="box-body">
+                   {{ form_widget(form.awards) }}
+                </div>
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-success" disabled>Save</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascripts_inline %}
+    {{ parent() }}
+    <script type="text/javascript">
+        var collections = [];
+        $('.award-collection').collection({
+            add: '<button type="button" class="btn btn-success">Add another award</button>',
+            remove: '<button type="button" class="btn btn-danger pull-right">Remove</button>',
+            allow_add: true,
+            allow_remove: true,
+            allow_up: false,
+            allow_down: false,
+            add_at_the_end: true,
+            after_init: function (collection) {
+                collection.children().each(function (index, element) {
+                    collections.push($(element).attr('id'))
+                })
+            },
+            after_add: function(collection, element) {
+                $('.dirty-check').find('button[type=submit]').removeAttr('disabled');
+
+                return true;
+            },
+            after_remove: function(collection, element) {
+                $('.dirty-check').find('button[type=submit]').removeAttr('disabled');
+                return true;
+            }
+        });
+
+        {#$('.profile-check').change(function () {#}
+            {#if ($(this).val() === '1') {#}
+                {#$('#supplierbundle_award_awards_0_name').val('nil');#}
+                {#$('#supplierbundle_award_awards_0_organisation').val('nil');#}
+                {#$('.datepicker').datepicker('update', new Date());#}
+                {#$('#supplierbundle_award_awards_0_description').val('nil');#}
+                {#$('form[name="supplierbundle_award"]').find('.box-body').hide()#}
+            {#} else {#}
+                {#$('form[name="supplierbundle_award"]').find('.box-body').show()#}
+            {#}#}
+
+        {#}).change();#}
+
+        {#$('form[name="supplierbundle_award"]').submit(function () {#}
+            {#if($(this).val() === '1') {#}
+                {#$.get('{{ profile.id }}/available/true', function (data) {#}
+                {#});#}
+            {#} else {#}
+                {#$.get('{{ profile.id }}/available/false', function (data) {#}
+                {#});#}
+            {#}#}
+            {#return true;#}
+        {#})#}
+    </script>
+{% endblock %}

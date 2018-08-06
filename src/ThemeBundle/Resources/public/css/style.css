@@ -1,0 +1,42 @@
+/*.sidebar-menu .treeview-menu {*/
+    /*list-style: none;*/
+    /*padding: 0;*/
+    /*margin: 0;*/
+    /*padding-left: 5px;*/
+/*}*/
+
+.sidebar-menu .treeview-menu > li > a {
+    font-size: 13px;
+}
+
+#appbundle_location_address > .form-group > label {
+    display: none;
+}
+
+.resize-vertically {
+    resize: vertical;
+}
+
+.timeline>li>.timeline-item {
+    background-color: #f2f2f2;
+}
+
+.skin-green .main-header .logo:hover {
+    background-color: #ecf0f5;
+}
+
+.skin-green .main-header .logo{
+    background-color: #ecf0f5;
+}
+
+.dataTable  th, td { white-space: nowrap; }
+
+th, td { white-space: normal; }
+
+.bootstrap-timepicker-widget.dropdown-menu.open {
+    border: 1px solid #3c8dbc
+}
+
+.select2.select2-container.select2-container--bootstrap {
+    width: 100% !important;
+}

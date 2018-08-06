@@ -1,0 +1,18 @@
+{% extends ':emails:layout.html.twig' %}
+{% block content %}
+    <p>Hi {{ user.firstName }},</p>
+
+    <p>Welcome to CX Connect!</p>
+
+    <p>You can now access our Supplier portal and set up your profile by clicking the link below:</p>
+
+    <p>Login URL: http://portal.cxconnect.com.au/login</p>
+    <p>Username: {{ user.username }}</p>
+    <p>Password: {{ user.plainPassword }}</p>
+
+    <p>If you have any questions about your account or need some help completing your profile sections please contact us on 1300 292 368.</p>
+
+    <p>Kind regards,</p>
+
+    <p>CX Connect</p>
+{% endblock %}

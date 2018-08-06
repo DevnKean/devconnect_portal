@@ -1,0 +1,42 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Commissions Models{% endblock %}
+{% block page_subtitle %}<a href="{{ url('commission_new') }}" class="btn btn-success btn-md">Create New Model</a>{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Model Name</th>
+                            <th>Is Flat Rate?</th>
+                            <th data-sortable="false"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for model in models %}
+                            <tr>
+                                <td>{{ model.id}}</td>
+                                <td>{{ model.name}}</td>
+                                <td>{{ model.isFlatRate ? (model.flatRate * 100)|number_format(2) ~ '%': 'N/A' }}</td>
+                                <td>
+                                    {% if not model.isFlatRate %}
+                                    <a class="btn bg-purple btn-xs" href="{{ path('commission_models', {'id' : model.id }) }}"><i class="fa fa-circle"></i></a>
+                                    {% endif %}
+                                    <a class="btn btn-danger btn-xs" onclick="return confirm('Are you sure to delete this model?')" href="{{ path('commission_delete', {'id' : model.id }) }}"><i class="fa fa-trash"></i></a>
+                                    <a class="btn bg-orange btn-xs" href="{{ path('commission_edit', {'id' : model.id }) }}"><i class="fa fa-edit"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,182 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Lead Management{% endblock %}
+{% block page_subtitle %}UNIQUE ID: {{ lead.uniqueID }}{% endblock %}
+
+{% block page_content %}
+    {% form_theme form 'jquery.collection.html.twig' 'lead-supplier-theme.html.twig' %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-success">
+                <!-- /.box-header -->
+                <!-- form start -->
+                {{ form_start(form) }}
+                <div class="box-body">
+                    {{ form_errors(form) }}
+                    <div class="row" style="display: flex; align-items: flex-end">
+                        <div class="col-sm-3">
+                            {{ form_row(form.lead) }}
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#leadModal">
+                                    View Lead
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#notesModal">
+                                    View Lead Notes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    {#<div class="row">#}
+                        {#<div class="col-sm-6">#}
+                            {#{{ form_row(form.function) }}#}
+                            {#{{ form_row(form.lostReason) }}#}
+                        {#</div>#}
+
+                    {#</div>#}
+                    <div class="row">
+                        {#<button type="button" data-collection="lead" class="collection-action collection-add btn btn-success">Add another supplier</button>#}
+                        {{ form_row(form.leadSuppliers) }}
+                    </div>
+
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-success pull-right">Save</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="leadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Lead Response</h4>
+                </div>
+                <div class="modal-body">
+                    {% for data in leadData %}
+                        <div class="panel panel-default">
+                            <div class="panel-heading">{{ data['question'] }}</div>
+                            <div class="panel-body">
+                                <ul>
+                                {% for answer in data['answer'] %}
+                                    <li>{{ answer }}</li>
+                                {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="notesModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Lead Notes History</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="box box-success">
+                        <!-- /.box-header -->
+                        <div class="box-body">
+                            {% if leadNotes| length %}
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th width="180">Date</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for leadNote in leadNotes %}
+                                        <tr>
+                                            <td>{{ leadNote.createdAt | date('d M Y H:i:s') }}</td>
+                                            <td>{{ leadNote.note }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% else %}
+                                <p>No Lead Notes</p>
+                            {% endif %}
+                        </div>
+                        <!-- /.box-body -->
+                        {{ form_start(noteForm) }}
+                        <div class="box-body">
+                            {{ form_widget(noteForm) }}
+                            <button type="submit" class="btn btn-primary pull-right">Save</button>
+                        </div>
+                        <!-- /.box-body -->
+                        {{ form_end(noteForm) }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts_inline %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $('.lead-collection').collection({
+            add: '<button type="button" class="btn btn-success">Add another supplier</button>',
+            allow_add: true,
+            allow_remove: true,
+            allow_up: false,
+            allow_down: false,
+            min: 1,
+            max: 10,
+            custom_add_location: false,
+            add_at_the_end: true,
+            after_init: function (collection) {
+                collection.children().each(function (index, element) {
+                    var leadResult = $(element).find('.lead-result');
+                    leadResult.change(function (e) {
+                        var row = leadResult.closest('div.col-sm-4');
+                        console.log(row);
+                        if (leadResult.val() === 'Success' || leadResult.val() === '') {
+                            row.find('.lost-reason').closest('div.form-group').hide()
+                            row.find('.lost-reason-notes').closest('div.form-group').hide()
+                        } else {
+                            row.find('.lost-reason').closest('div.form-group').show()
+                            row.find('.lost-reason-notes').closest('div.form-group').show()
+                        }
+                    }).change();
+                })
+            },
+            after_add: function (collection, element) {
+                var leadResult = $(element).find('.lead-result');
+                leadResult.change(function (e) {
+                    var row = leadResult.closest('div.col-sm-4');
+                    console.log(row);
+                    if (leadResult.val() === 'Success' || leadResult.val() === '') {
+                        row.find('.lost-reason').closest('div.form-group').hide()
+                        row.find('.lost-reason-notes').closest('div.form-group').hide()
+                    } else {
+                        row.find('.lost-reason').closest('div.form-group').show()
+                        row.find('.lost-reason-notes').closest('div.form-group').show()
+                    }
+                }).change();
+            }
+        });
+
+
+    </script>
+{% endblock %}

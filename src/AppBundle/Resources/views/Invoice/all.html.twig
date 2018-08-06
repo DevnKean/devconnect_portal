@@ -1,0 +1,61 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Invoices{% endblock %}
+{% block page_subtitle %}<a href="{{ url('invoice_create') }}" class="btn btn-success btn-md">Create Invoice</a>{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-success">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th>Created At</th>
+                            <th>Xero ID</th>
+                            <th>Supplier</th>
+                            <th>Lead</th>
+                            <th>Service</th>
+                            <th>Function</th>
+                            <th>Amount of Customer Invoice ($)</th>
+                            <th>Tier Level</th>
+                            <th>Commission Rate</th>
+                            <th>Commissions ($)</th>
+                            <th>CX Connect invoice due date</th>
+                            <th>Next invoice due to be issued on</th>
+                            <th>Status</th>
+                            <th data-sortable="false"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for invoice in invoices %}
+                            <tr>
+                                <td>{{ invoice.createdAt|date }}</td>
+                                <td>{{ invoice.xeroId }}</td>
+                                <td>{{ invoice.supplier}}</td>
+                                <td>{{ invoice.lead}}</td>
+                                <td>{{ invoice.lead.service }}</td>
+                                <td>
+                                    {% for function in invoice.lead.function %}
+                                        <p>{{ function }}</p>
+                                    {% endfor %}
+                                </td>
+                                <td>{{ invoice.supplierInvoice.total| localizedcurrency('AUD') }}</td>
+                                <td>{{ invoice.tierLevel}}</td>
+                                <td>{{ (invoice.commissionRate * 100)| number_format(2)}}%</td>
+                                <td>{{ (invoice.commission) | localizedcurrency('AUD') }}</td>
+                                <td>{{ invoice.dueAt| date }}</td>
+                                <td>{{ invoice.nextInvoiceIssueAt|date }}</td>
+                                <td>{{ invoice.status }}</td>
+                                <td><a class="btn bg-purple btn-xs" href="{{ path('invoice_edit', {'id' : invoice.id}) }}"><i class="fa fa-edit"></i></a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

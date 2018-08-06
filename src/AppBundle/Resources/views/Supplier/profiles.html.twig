@@ -1,0 +1,40 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Supplier Profiles{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-success">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th>Supplier</th>
+                            <th>Profile</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for supplierProfile in supplierProfiles %}
+                            <tr>
+                                <td>{{ supplierProfile.supplier }}</td>
+                                <td>{{ supplierProfile.profile }}</td>
+                                <td>{{ supplierProfile.status }}</td>
+                                <td>
+                                    {#<a class="btn bg-orange btn-xs" href="{{ path('supplier_view', {'id': supplier.id}) }}"><i class="fa fa-eye"></i></a>#}
+                                    {#<a class="btn bg-red btn-xs" onclick="return confirm('Are you sure to delete this supplier ({{ supplier }}), you will lost all related data');" href="{{ path('supplier_delete', {'id': supplier.id}) }}"><i class="fa fa-trash"></i></a>#}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

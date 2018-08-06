@@ -1,0 +1,60 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Potential Supplier{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Edit Potential Supplier</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                {{ form_start(form) }}
+                <div class="box-body">
+                    {{ form_widget(form) }}
+                </div>
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-success pull-right" formnovalidate="formnovalidate">Approve & Save</button>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Additional Information</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-6"><strong>Total number of contact centre seats</strong></div>
+                        <div class="col-sm-6"><p>{{ potentialSupplier.totalSeats }}</p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6"><strong>Locations of your call centres</strong></div>
+                        <div class="col-sm-6">
+                            <p>
+                                {{ potentialSupplier.locations|join(',') }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6"><strong>Years of Operations</strong></div>
+                        <div class="col-sm-6"><p>{{ potentialSupplier.yearsOfOperations }}</p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6"><strong>Business Directory</strong></div>
+                        <div class="col-sm-6"><p>{{ potentialSupplier.businessDirectory }}</p></div>
+                    </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

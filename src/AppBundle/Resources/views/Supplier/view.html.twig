@@ -1,0 +1,1198 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %} {{ supplier.businessName }}{% endblock %}
+{% block page_subtitle %}ID: {{ supplier.id }}{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>{{ supplier.allocatedLeads| length }}</h3>
+                    <p>Total Leads</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow-gradient">
+                <div class="inner">
+                    <h3>{{ supplier.campaigns| length }}</h3>
+                    <p>Total Campaigns</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>{{ supplier.earnings| localizedcurrency('AUD') }}</h3>
+                    <p>Total Revenues</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-purple">
+                <div class="inner">
+                    <h3>{{ supplier.commissions| localizedcurrency('AUD') }}</h3>
+                    <p>Total Commissions</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- Custom Tabs -->
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#overview" data-toggle="tab">Overview</a></li>
+                    <li><a href="#activity-log" data-toggle="tab">Activity Logs</a></li>
+                    <li><a href="#profiles" data-toggle="tab">Profiles</a></li>
+                    <li><a href="#profileData" data-toggle="tab">Profile Data</a></li>
+                    <li><a href="#invoice" data-toggle="tab">Invoices</a></li>
+                    <li><a href="#notes" data-toggle="tab">Notes</a></li>
+                    <li><a href="#user" data-toggle="tab">Users</a></li>
+                    {#<li class="dropdown">#}
+                    {#<a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">#}
+                    {#Dropdown <span class="caret"></span>#}
+                    {#</a>#}
+                    {#<ul class="dropdown-menu">#}
+                    {#<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>#}
+                    {#<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>#}
+                    {#<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>#}
+                    {#<li role="presentation" class="divider"></li>#}
+                    {#<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>#}
+                    {#</ul>#}
+                    {#</li>#}
+                    {#<li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>#}
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="overview">
+                       <div class="row">
+                           <div class="col-sm-6">
+                               <div class="panel panel-default">
+                                   <div class="panel-heading">Business Information</div>
+                                   <div class="panel-body">
+                                       <div class="row">
+                                           <div class="col-sm-4"><h4>Business Name</h4></div>
+                                           <div class="col-sm-8"><h4>{{ supplier.businessName }}</h4></div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-sm-4"><h4>Trading Name</h4></div>
+                                           <div class="col-sm-8"><h4>{{ supplier.tradingName }}</h4></div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-sm-4"><h4>ABN Number</h4></div>
+                                           <div class="col-sm-8"><h4>{{ supplier.abnNumber }}</h4></div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-sm-4"><h4>Address</h4></div>
+                                           <div class="col-sm-8"><h4>{{ supplier.address }}</h4></div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-sm-4"><h4>Website</h4></div>
+                                           <div class="col-sm-8"><h4>{{ supplier.website }}</h4></div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-sm-4"><h4>LinkedIn</h4></div>
+                                           <div class="col-sm-8"><h4>{{ supplier.linkedin }}</h4></div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-sm-4"><h4>Twitter</h4></div>
+                                           <div class="col-sm-8"><h4>{{ supplier.twitter }}</h4></div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-sm-4"><h4>Youtube</h4></div>
+                                           <div class="col-sm-8"><h4>{{ supplier.youtube }}</h4></div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-sm-4"><h4>Instagram</h4></div>
+                                           <div class="col-sm-8"><h4>{{ supplier.instagram }}</h4></div>
+                                       </div>
+                                       <div class="row">
+                                           <div class="col-sm-4"><h4>Snapchat</h4></div>
+                                           <div class="col-sm-8"><h4>{{ supplier.snapchat }}</h4></div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-sm-6">
+                               <div class="panel panel-default">
+                                   <div class="panel-heading">Contract Information</div>
+                                   <div class="panel-body">
+                                       {% if supplier.contract %}
+                                           <div class="row">
+                                               <div class="col-sm-4"><h4>Contact Start Date</h4></div>
+                                               <div class="col-sm-8"><h4>{{ supplier.contract.startDate|date }}</h4></div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-sm-4"><h4>Contract End Date</h4></div>
+                                               <div class="col-sm-8"><h4>{{ supplier.contract.endDate|date }}</h4></div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-sm-4"><h4>Contract</h4></div>
+                                               <div class="col-sm-8"><h4><a href="{{ asset('uploads/' ~ supplier.contract.file) }}" target="_blank">View Contract</a></h4></div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-sm-4"><h4>Contact Payment Term</h4></div>
+                                               <div class="col-sm-8"><h4>{{ supplier.contract.paymentTerm }} Days</h4></div>
+                                           </div>
+                                           <div class="row">
+                                               <div class="col-sm-4"><h4>Commission Model</h4></div>
+                                               <div class="col-sm-8">
+                                                   {% for contractService in supplier.contract.contractServices %}
+                                                       <h5>{{ contractService.service }} - {{ contractService.commissionModel }}</h5>
+                                                   {% endfor  %}
+                                               </div>
+                                           </div>
+                                           <div class="row">
+                                               {% for contractService in supplier.contract.contractServices %}
+                                                   <div class="col-sm-12">
+                                                       <h5>{{ contractService.service }} - {{ contractService.commissionModel }}</h5>
+                                                       <table class="table table-bordered table-striped">
+                                                           <thead>
+                                                           <tr>
+                                                               <th data-sortable="false">Tier</th>
+                                                               <th>Lower threshold</th>
+                                                               <th>Upper threshold</th>
+                                                               <th>Rate year 1</th>
+                                                               <th>Rate year 2</th>
+                                                               <th>Rate year 3</th>
+                                                           </tr>
+                                                           </thead>
+                                                           <tbody>
+                                                           {% for tier in contractService.commissionModel.commissionTiers %}
+                                                               <tr>
+                                                                   <td>{{ tier.tierLevel}}</td>
+                                                                   <td>{{ tier.lowerThreshold| localizedcurrency('AUD')}}</td>
+                                                                   <td>{{ tier.upperThreshold ? tier.upperThreshold| localizedcurrency('AUD') : ''}}</td>
+                                                                   <td>{{ (tier.rateYearOne * 100)|number_format(2) }}%</td>
+                                                                   <td>{{ (tier.rateYearTwo * 100)|number_format(2) }}%</td>
+                                                                   <td>{{ (tier.rateYearThree * 100)|number_format(2) }}%</td>
+                                                               </tr>
+                                                           {% endfor %}
+                                                           </tbody>
+                                                       </table>
+                                                   </div>
+                                               {% endfor  %}
+                                           </div>
+                                       {% else %}
+                                           <p>No contract available</p>
+                                       {% endif %}
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="activity-log">
+                        {% if activityLog.activityItems %}
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Datetime</th>
+                                    <th>Activity Type</th>
+                                    <th>Activity Detail</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for key, items in activityLog.activityItems %}
+                                    {% for item in items %}
+                                        <tr>
+                                            <td>{{ item.date| date('d M Y H:i:s') }}</td>
+                                            <td>{{ item.activityType }}</td>
+                                            <td>{{ item.details }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                        <p>No Activity Log Available</p>
+                        {% endif %}
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="profiles">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="box box-success">
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        {% if supplierProfiles %}
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Profile</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for supplierProfile in supplierProfiles %}
+                                                <tr>
+                                                    <td>{{ supplierProfile.profile }}</td>
+                                                    <td>
+                                                        <label class="label bg-{{ supplierProfile.badgeColor }}">
+                                                            {{ supplierProfile.status }}
+                                                        </label>
+
+                                                    </td>
+                                                    <td>
+                                                        <a class="btn btn-success btn-xs"
+                                                           href="{{ path('supplier_profile_approve', {'id': supplier.id, 'profileId': supplierProfile.profile.id}) }}">Approve</a>
+                                                        {#<a class="btn bg-red btn-xs" onclick="return confirm('Are you sure to delete this supplier ({{ supplier }}), you will lost all related data');" href="{{ path('supplier_delete', {'id': supplier.id}) }}"><i class="fa fa-trash"></i></a>#}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        {% else %}
+                                        <p>No proifles yet</p>
+                                        {% endif %}
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="profileData">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="box {{ supplier.getProfileStatusBoxClass(constant('AppBundle\\Entity\\Profile::PROFILE_TECHNOLOGY')) }}">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Technology</h3>
+                                        <span class="label {{ supplier.profileStatusClass(constant('AppBundle\\Entity\\Profile::PROFILE_TECHNOLOGY')) }}"> {{ supplier.profileStatus(constant('AppBundle\\Entity\\Profile::PROFILE_TECHNOLOGY')) }}</span>
+
+                                        <div class="box-tools pull-right">
+                                                <a class="btn btn-sm btn-info" href="{{ path('supplier_activity_log', {'id': supplier.id, 'slug': 'technology'}) }}">Log</a>
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.box-tools -->
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Technology</th>
+                                                <th>Vendor</th>
+                                                <th>Experience Level</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for technology in supplier.technologies %}
+                                                <tr>
+                                                    <td>{{ technology.technology }}</td>
+                                                    <td>{{ technology.vendor }}</td>
+                                                    <td>{{ technology.experienceLevel }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                                <!-- /.box -->
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="box {{ supplier.getProfileStatusBoxClass(constant('AppBundle\\Entity\\Profile::PROFILE_SUPPORT_FUNCTION')) }}">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Support Function</h3>
+                                        <span class="label {{ supplier.profileStatusClass(constant('AppBundle\\Entity\\Profile::PROFILE_SUPPORT_FUNCTION'))}}"> {{ supplier.profileStatus(constant('AppBundle\\Entity\\Profile::PROFILE_SUPPORT_FUNCTION')) }}</span>
+
+                                        <div class="box-tools pull-right">
+                                            <a class="btn btn-sm btn-info" href="{{ path('supplier_activity_log', {'id': supplier.id, 'slug': 'support-function'}) }}">Log</a>
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.box-tools -->
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Function</th>
+                                                <th>Point</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for support in supplier.supportFunctions %}
+                                                <tr>
+                                                    <td>{{ support.function }}</td>
+                                                    <td>{{ support.point }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                                <!-- /.box -->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="box {{ supplier.getProfileStatusBoxClass(constant('AppBundle\\Entity\\Profile::PROFILE_CHANNEL_SUPPORT')) }}">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Channel Support</h3>
+                                        <span class="label {{ supplier.profileStatusClass(constant('AppBundle\\Entity\\Profile::PROFILE_CHANNEL_SUPPORT')) }}"> {{ supplier.profileStatus(constant('AppBundle\\Entity\\Profile::PROFILE_CHANNEL_SUPPORT')) }}</span>
+
+                                        <div class="box-tools pull-right">
+                                            <a class="btn btn-sm btn-info" href="{{ path('supplier_activity_log', {'id': supplier.id, 'slug': 'channel-support'}) }}">Log</a>
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.box-tools -->
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Channel</th>
+                                                <th>Experience Level</th>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for channelSupport in supplier.channelSupports %}
+                                                <tr>
+                                                    <td>{{ channelSupport.channel }}</td>
+                                                    <td>{{ channelSupport.experienceLevel }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                                <!-- /.box -->
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="box {{ supplier.getProfileStatusBoxClass(constant('AppBundle\\Entity\\Profile::PROFILE_DATA_ACQUISITION')) }}">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Data Acquisition</h3>
+                                        <span class="label {{ supplier.profileStatusClass(constant('AppBundle\\Entity\\Profile::PROFILE_DATA_ACQUISITION'))}}"> {{ supplier.profileStatus(constant('AppBundle\\Entity\\Profile::PROFILE_DATA_ACQUISITION')) }}</span>
+
+                                        <div class="box-tools pull-right">
+                                            <a class="btn btn-sm btn-info" href="{{ path('supplier_activity_log', {'id': supplier.id, 'slug': 'data-acquisition'}) }}">Log</a>
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.box-tools -->
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Experience</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                            {% if supplier.dataAcquisition %}
+                                                <td>{{ supplier.dataAcquisition.experience }}</td>
+                                            {% endif %}
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                                <!-- /.box -->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="box {{ supplier.getProfileStatusBoxClass(constant('AppBundle\\Entity\\Profile::PROFILE_AWARD'))}}">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Award</h3>
+                                        <span class="label {{ supplier.profileStatusClass(constant('AppBundle\\Entity\\Profile::PROFILE_AWARD')) }}"> {{ supplier.profileStatus(constant('AppBundle\\Entity\\Profile::PROFILE_AWARD')) }}</span>
+
+                                        <div class="box-tools pull-right">
+                                            <a class="btn btn-sm btn-info" href="{{ path('supplier_activity_log', {'id': supplier.id, 'slug': 'award'}) }}">Log</a>
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.box-tools -->
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Organisation</th>
+                                                <th>Date</th>
+                                                <th>Description</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for award in supplier.awards %}
+                                                <tr>
+                                                    <td>{{ award.name }}</td>
+                                                    <td>{{ award.organisation }}</td>
+                                                    <td>{{ award.date | date }}</td>
+                                                    <td>{{ award.description }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                                <!-- /.box -->
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="box {{ supplier.getProfileStatusBoxClass(constant('AppBundle\\Entity\\Profile::PROFILE_LEGAL')) }}">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Legal</h3>
+                                        <span class="label {{ supplier.profileStatusClass(constant('AppBundle\\Entity\\Profile::PROFILE_LEGAL')) }}"> {{ supplier.profileStatus(constant('AppBundle\\Entity\\Profile::PROFILE_LEGAL')) }}</span>
+
+                                        <div class="box-tools pull-right">
+                                            <a class="btn btn-sm btn-info" href="{{ path('supplier_activity_log', {'id': supplier.id, 'slug': 'legal'}) }}">Log</a>
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.box-tools -->
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Public Liability</th>
+                                                <th>Professional Indemnity</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{ supplier.publicLiability|number_format(2) }}</td>
+                                                    <td>{{ supplier.professionalIndemnity|number_format(2) }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Certification</th>
+                                                <th>Number</th>
+                                                <th>Description</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for certification in supplier.certifications %}
+                                                <tr>
+                                                    <td>{{ certification.name }}</td>
+                                                    <td>{{ certification.number }}</td>
+                                                    <td>{{ certification.description }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                                <!-- /.box -->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="box {{ supplier.getProfileStatusBoxClass(constant('AppBundle\\Entity\\Profile::PROFILE_CONTACT'))}}">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Contacts</h3>
+                                        <span class="label {{ supplier.profileStatusClass(constant('AppBundle\\Entity\\Profile::PROFILE_CONTACT'))}}"> {{ supplier.profileStatus(constant('AppBundle\\Entity\\Profile::PROFILE_CONTACT')) }}</span>
+
+                                        <div class="box-tools pull-right">
+                                            <a class="btn btn-sm btn-info" href="{{ path('supplier_activity_log', {'id': supplier.id, 'slug': 'contact'}) }}">Log</a>
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.box-tools -->
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Work Phone</th>
+                                                <th>Mobile Phone</th>
+                                                <th>Type</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for contact in supplier.contacts %}
+                                                <tr>
+                                                    <td>{{ contact.name }}</td>
+                                                    <td>{{ contact.email }}</td>
+                                                    <td>{{ contact.workPhone }}</td>
+                                                    <td>{{ contact.mobilePhone }}</td>
+                                                    <td>{{ contact.type }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                                <!-- /.box -->
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="box {{ supplier.getProfileStatusBoxClass(constant('AppBundle\\Entity\\Profile::PROFILE_EXPERIENCE'))}}">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Experience</h3>
+                                        <span class="label {{ supplier.profileStatusClass(constant('AppBundle\\Entity\\Profile::PROFILE_EXPERIENCE')) }}"> {{ supplier.profileStatus(constant('AppBundle\\Entity\\Profile::PROFILE_EXPERIENCE')) }}</span>
+                                        <div class="box-tools pull-right">
+                                            <a class="btn btn-sm btn-info" href="{{ path('supplier_activity_log', {'id': supplier.id, 'slug': 'experience'}) }}">Log</a>
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.box-tools -->
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Function</th>
+                                                <th>Years Experience</th>
+                                                <th>Self Rating</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for experience in supplier.experiences %}
+                                                <tr>
+                                                    <td>{{ experience.function }}</td>
+                                                    <td>{{ experience.yearsExperience }}</td>
+                                                    <td>{{ experience.selfRating }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                                <!-- /.box -->
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="box {{ supplier.getProfileStatusBoxClass(constant('AppBundle\\Entity\\Profile::PROFILE_COMMERCIAL'))}}">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Commercial</h3>
+                                        <span class="label {{ supplier.profileStatusClass(constant('AppBundle\\Entity\\Profile::PROFILE_COMMERCIAL'))}}"> {{ supplier.profileStatus(constant('AppBundle\\Entity\\Profile::PROFILE_COMMERCIAL')) }}</span>
+
+                                        <div class="box-tools pull-right">
+                                            <a class="btn btn-sm btn-info" href="{{ path('supplier_activity_log', {'id': supplier.id, 'slug': 'commercial'}) }}">Log</a>
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.box-tools -->
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Models</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        {% if supplier.commercial %}
+                                                            {% for model in supplier.commercial.models %}
+                                                                <p>{{ model }}</p>
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                                <!-- /.box -->
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="box {{ supplier.getProfileStatusBoxClass(constant('AppBundle\\Entity\\Profile::PROFILE_MINIMUM_VOLUME'))}}">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Minimum Volume</h3>
+                                        <span class="label {{ supplier.profileStatusClass(constant('AppBundle\\Entity\\Profile::PROFILE_MINIMUM_VOLUME')) }}"> {{ supplier.profileStatus(constant('AppBundle\\Entity\\Profile::PROFILE_MINIMUM_VOLUME')) }}</span>
+                                        <div class="box-tools pull-right">
+                                            <a class="btn btn-sm btn-info" href="{{ path('supplier_activity_log', {'id': supplier.id, 'slug': 'minimum-volume'}) }}">Log</a>
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.box-tools -->
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Inbound contacts per day</th>
+                                                <th>Headcount</th>
+                                                <th>Data</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        {% if supplier.minimumVolume %}
+                                                        {% for contact in supplier.minimumVolume.inboundContacts %}
+                                                            <p>{{ contact }}</p>
+                                                        {% endfor %}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if supplier.minimumVolume %}
+                                                            {% for headcount in supplier.minimumVolume.headcount %}
+                                                                <p>{{ headcount }}</p>
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if supplier.minimumVolume %}
+                                                            {% for data in supplier.minimumVolume.campaignData %}
+                                                                <p>{{ data }}</p>
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                                <!-- /.box -->
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="box {{ supplier.getProfileStatusBoxClass(constant('AppBundle\\Entity\\Profile::PROFILE_CURRENT_REFERENCE'))}}">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Current Reference</h3>
+                                        <span class="label {{ supplier.profileStatusClass(constant('AppBundle\\Entity\\Profile::PROFILE_CURRENT_REFERENCE')) }}"> {{ supplier.profileStatus(constant('AppBundle\\Entity\\Profile::PROFILE_CURRENT_REFERENCE')) }}</span>
+
+                                        <div class="box-tools pull-right">
+                                            <a class="btn btn-sm btn-info" href="{{ path('supplier_activity_log', {'id': supplier.id, 'slug': 'current-reference'}) }}">Log</a>
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.box-tools -->
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Company Name</th>
+                                                <th>Title</th>
+                                                <th>Email</th>
+                                                <th>Work Phone</th>
+                                                <th>Mobile Phone</th>
+                                                <th>Work Type</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for reference in supplier.references %}
+                                                {% if reference.type == 'current' %}
+                                                    <tr>
+                                                        <td>{{ reference.name }}</td>
+                                                        <td>{{ reference.companyName }}</td>
+                                                        <td>{{ reference.title }}</td>
+                                                        <td>{{ reference.email }}</td>
+                                                        <td>{{ reference.workPhone }}</td>
+                                                        <td>{{ reference.mobilePhone }}</td>
+                                                        <td></td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                                <!-- /.box -->
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="box {{ supplier.getProfileStatusBoxClass(constant('AppBundle\\Entity\\Profile::PROFILE_PAST_REFERENCE'))}}">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Past Reference</h3>
+                                        <span class="label {{ supplier.profileStatusClass(constant('AppBundle\\Entity\\Profile::PROFILE_PAST_REFERENCE')) }}"> {{ supplier.profileStatus(constant('AppBundle\\Entity\\Profile::PROFILE_PAST_REFERENCE')) }}</span>
+
+                                        <div class="box-tools pull-right">
+                                            <a class="btn btn-sm btn-info" href="{{ path('supplier_activity_log', {'id': supplier.id, 'slug': 'past-reference'}) }}">Log</a>
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.box-tools -->
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Company Name</th>
+                                                <th>Title</th>
+                                                <th>Email</th>
+                                                <th>Work Phone</th>
+                                                <th>Mobile Phone</th>
+                                                <th>Functions</th>
+                                                <th>Cessation Reason</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for reference in supplier.references %}
+                                                {% if reference.type == 'past' %}
+                                                    <tr>
+                                                        <td>{{ reference.name }}</td>
+                                                        <td>{{ reference.companyName }}</td>
+                                                        <td>{{ reference.title }}</td>
+                                                        <td>{{ reference.email }}</td>
+                                                        <td>{{ reference.workPhone }}</td>
+                                                        <td>{{ reference.mobilePhone }}</td>
+                                                        <td>
+                                                            {% for function in reference.functions %}
+                                                                <p>{{ function }}</p>
+                                                            {% endfor %}
+                                                        </td>
+                                                        <td>{{ reference.cessationReason }}</td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                                <!-- /.box -->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="box {{ supplier.getProfileStatusBoxClass(constant('AppBundle\\Entity\\Profile::PROFILE_CUSTOMER'))}}">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Customer</h3>
+                                        <span class="label {{ supplier.profileStatusClass(constant('AppBundle\\Entity\\Profile::PROFILE_CUSTOMER'))}}"> {{ supplier.profileStatus(constant('AppBundle\\Entity\\Profile::PROFILE_CUSTOMER')) }}</span>
+                                        <div class="box-tools pull-right">
+                                            <a class="btn btn-sm btn-info" href="{{ path('supplier_activity_log', {'id': supplier.id, 'slug': 'customer'}) }}">Log</a>
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.box-tools -->
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Industrial Vertical</th>
+                                                <th>Function</th>
+                                                <th>Total Seats</th>
+                                                <th>Percentage of Business</th>
+                                                <th>Work Period</th>
+                                                <th>locations</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for customer in supplier.customers %}
+                                                <tr>
+                                                    <td>{{ customer.name }}</td>
+                                                    <td>{{ customer.industryVertical }}</td>
+                                                    <td>
+                                                        {% for function in customer.functions %}
+                                                            <p>{{ function }}</p>
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td>{{ customer.totalSeats }}</td>
+                                                    <td>{{ (customer.percentageOfBusiness * 100)|number_format(1) }}%</td>
+                                                    <td>{{ customer.workPeriod }}</td>
+                                                    <td>
+                                                        {% for location in customer.locations %}
+                                                            <p>{{ location.address }}</p>
+                                                        {% endfor %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                                <!-- /.box -->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="box {{ supplier.getProfileStatusBoxClass(constant('AppBundle\\Entity\\Profile::PROFILE_LOCATION'))}}">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Location</h3>
+                                        <span class="label {{ supplier.profileStatusClass(constant('AppBundle\\Entity\\Profile::PROFILE_LOCATION'))}}"> {{ supplier.profileStatus(constant('AppBundle\\Entity\\Profile::PROFILE_LOCATION')) }}</span>
+
+                                        <div class="box-tools pull-right">
+                                            <a class="btn btn-sm btn-info" href="{{ path('supplier_activity_log', {'id': supplier.id, 'slug': 'location'}) }}">Log</a>
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.box-tools -->
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Address</th>
+                                                <th>Years Open</th>
+                                                <th>Total Seats</th>
+                                                <th>Available Seats</th>
+                                                <th>Monday Open Hours</th>
+                                                <th>Tuesday Open Hours</th>
+                                                <th>Wednesday Open Hours</th>
+                                                <th>Thursday Open Hours</th>
+                                                <th>Friday Open Hours</th>
+                                                <th>Saturday Open Hours</th>
+                                                <th>Sunday Open Hours</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for location in supplier.locations %}
+                                                <tr>
+                                                    <td>{{ location.fullAddress }}</td>
+                                                    <td>{{ location.yearsOpen }}</td>
+                                                    <td>{{ location.totalSeats }}</td>
+                                                    <td>{{ location.availableSeats }}</td>
+                                                    <td>
+                                                        {% if location.isMondayOpen24Hours %}
+                                                            <p>Open 24 hours</p>
+                                                        {% else %}
+                                                            {{ location.mondayOpenTime|date('H:i')  }} - {{ location.mondayCloseTime|date('H:i') }}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if location.isTuesdayOpen24Hours %}
+                                                            <p>Open 24 hours</p>
+                                                        {% else %}
+                                                            {{ location.tuesdayOpenTime|date('H:i')  }} - {{ location.tuesdayCloseTime|date('H:i') }}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if location.isWednesdayOpen24Hours %}
+                                                            <p>Open 24 hours</p>
+                                                        {% else %}
+                                                            {{ location.wednesdayOpenTime|date('H:i')  }} - {{ location.wednesdayCloseTime|date('H:i') }}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if location.isThursdayOpen24Hours %}
+                                                            <p>Open 24 hours</p>
+                                                        {% else %}
+                                                            {{ location.thursdayOpenTime|date('H:i')  }} - {{ location.thursdayCloseTime|date('H:i') }}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if location.isFridayOpen24Hours %}
+                                                            <p>Open 24 hours</p>
+                                                        {% else %}
+                                                            {{ location.fridayOpenTime|date('H:i')  }} - {{ location.fridayCloseTime|date('H:i') }}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if location.isSaturdayOpen24Hours %}
+                                                            <p>Open 24 hours</p>
+                                                        {% else %}
+                                                            {{ location.saturdayOpenTime|date('H:i')  }} - {{ location.saturdayCloseTime|date('H:i') }}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        {% if location.isSundayOpen24Hours %}
+                                                            <p>Open 24 hours</p>
+                                                        {% else %}
+                                                            {{ location.sundayOpenTime|date('H:i')  }} - {{ location.sundayCloseTime|date('H:i') }}
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                                <!-- /.box -->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="box {{ supplier.getProfileStatusBoxClass(constant('AppBundle\\Entity\\Profile::PROFILE_TENDER')) }}">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Tenders</h3>
+                                        <span class="label {{ supplier.profileStatusClass(constant('AppBundle\\Entity\\Profile::PROFILE_TENDER')) }}"> {{ supplier.profileStatus(constant('AppBundle\\Entity\\Profile::PROFILE_TENDER')) }}</span>
+
+                                        <div class="box-tools pull-right">
+                                            <a class="btn btn-sm btn-info" href="{{ path('supplier_activity_log', {'id': supplier.id, 'slug': 'tenders'}) }}">Log</a>
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.box-tools -->
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Would you like us to send you qualified opportunities for RFI/RFP/Tenders?</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td> {% if supplier.tender %}
+                                                        {{ supplier.tender.sendOpportunities }}
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                                <!-- /.box -->
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="box {{ supplier.getProfileStatusBoxClass(constant('AppBundle\\Entity\\Profile::PROFILE_WORK_FROM_HOME')) }}">
+                                    <div class="box-header with-border">
+                                        <h3 class="box-title">Work From Home</h3>
+                                        <span class="label {{ supplier.profileStatusClass(constant('AppBundle\\Entity\\Profile::PROFILE_WORK_FROM_HOME')) }}"> {{ supplier.profileStatus(constant('AppBundle\\Entity\\Profile::PROFILE_WORK_FROM_HOME')) }}</span>
+
+                                        <div class="box-tools pull-right">
+                                            <a class="btn btn-sm btn-info" href="{{ path('supplier_activity_log', {'id': supplier.id, 'slug': 'work-from-home'}) }}">Log</a>
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.box-tools -->
+                                    </div>
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Country</th>
+                                                <th>FTE</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% if supplier.workFromHomes|length %}
+                                                <tr>
+                                                    {% for workFromHome in supplier.workFromHomes %}
+                                                        <td>{{ workFromHome.country }}</td>
+                                                        <td>{{ workFromHome.fte }}</td>
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endif %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                                <!-- /.box -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="invoice">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                {% if supplier.invoices|length > 0 %}
+                                    <table class="table table-bordered table-striped dataTable">
+                                        <thead>
+                                        <tr>
+                                            <th>Created At</th>
+                                            <th>Xero ID</th>
+                                            <th>Supplier</th>
+                                            <th>Lead</th>
+                                            <th>Service</th>
+                                            <th>Function</th>
+                                            <th>Amount of Customer Invoice ($)</th>
+                                            <th>Tier Level</th>
+                                            <th>Commission Rate</th>
+                                            <th>Commissions ($)</th>
+                                            <th>CX Connect invoice due date</th>
+                                            <th>Next invoice due to be issued on</th>
+                                            <th>Status</th>
+                                            <th data-sortable="false"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for invoice in supplier.invoices %}
+                                            <tr>
+                                                <td>{{ invoice.createdAt|date }}</td>
+                                                <td>{{ invoice.xeroId }}</td>
+                                                <td>{{ invoice.supplier}}</td>
+                                                <td>{{ invoice.lead}}</td>
+                                                <td>{{ invoice.lead.service }}</td>
+                                                <td>
+                                                    {% for function in invoice.lead.function %}
+                                                        <p>{{ function }}</p>
+                                                    {% endfor %}
+                                                </td>
+                                                <td>{{ invoice.supplierInvoice.total| localizedcurrency('AUD') }}</td>
+                                                <td>{{ invoice.tierLevel}}</td>
+                                                <td>{{ (invoice.commissionRate * 100)| number_format(2)}}%</td>
+                                                <td>{{ (invoice.commission) | localizedcurrency('AUD') }}</td>
+                                                <td>{{ invoice.dueAt| date }}</td>
+                                                <td>{{ invoice.nextInvoiceIssueAt|date }}</td>
+                                                <td>{{ invoice.status }}</td>
+                                                <td><a class="btn bg-purple btn-xs" href="{{ path('invoice_edit', {'id' : invoice.id}) }}"><i class="fa fa-edit"></i></a></td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                {% else %}
+                                    <p>No invoice available</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="notes">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="box box-success">
+                                    <!-- /.box-header -->
+                                    <!-- form start -->
+                                    {{ form_start(form) }}
+                                    <div class="box-body">
+                                        {{ form_widget(form) }}
+                                    </div>
+                                    <!-- /.box-body -->
+
+                                    <div class="box-footer">
+                                        <button type="submit" class="btn btn-primary pull-right">Create</button>
+                                    </div>
+                                    {{ form_end(form) }}
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="box box-success">
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        {% if notes| length %}
+                                            <table class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th width="180">Date</th>
+                                                    <th>Notes</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for note in notes %}
+                                                    <tr>
+                                                        <td>{{ note.createdAt | date('d M Y H:i:s') }}</td>
+                                                        <td>{{ note.note }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        {% else %}
+                                            <p>No Supplier Notes</p>
+                                        {% endif %}
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="user">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="box box-success">
+                                    <!-- /.box-header -->
+                                    <div class="box-body">
+                                        {% if supplier.users|length %}
+                                            <table class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Username</th>
+                                                    <th>Role</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for user in supplier.users %}
+                                                    <tr>
+                                                        <td>{{ user.username }}</td>
+                                                        <td>
+                                                            {% for role in user.roles %}
+                                                            <p>{{ role }}</p>
+                                                            {% endfor %}
+                                                        </td>
+                                                        <td>
+                                                            <a class="btn btn-success btn-xs"
+                                                               href="{{ path('user_edit', {'id': user.id}) }}">Edit</a>
+                                                            {#<a class="btn bg-red btn-xs" onclick="return confirm('Are you sure to delete this supplier ({{ supplier }}), you will lost all related data');" href="{{ path('supplier_delete', {'id': supplier.id}) }}"><i class="fa fa-trash"></i></a>#}
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        {% else %}
+                                            <p>No proifles yet</p>
+                                        {% endif %}
+                                    </div>
+                                    <!-- /.box-body -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.tab-content -->
+            </div>
+            <!-- nav-tabs-custom -->
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %} Locations {% endblock %}
+{% block page_subtitle %}<a href="{{ url('profile_location_new') }}" class="btn bg-orange btn-md"><i
+            class="fa fa-plus"></i> Add Location</a>{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            {% include '@Supplier/Profile/notification.html.twig' %}
+            {% include '@Supplier/Profile/feedback.html.twig' %}
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Please provide us with an overview of the facilities where you operate
+                        from</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table class="table table-bordered table-striped dataTable">
+                        <thead>
+                        <tr>
+                            <th width="35%">Address</th>
+                            <th width="10%">Years Open</th>
+                            <th width="10%">Total Seats</th>
+                            <th width="10%">Available Seats</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for location in locations %}
+                            <tr>
+                                <td>{{location.fullAddress}}</td>
+                                <td>{{ location.yearsOpen }}</td>
+                                <td>{{ location.totalSeats }}</td>
+                                <td>{{ location.availableSeats }}</td>
+                                <td>
+                                    <a class="btn bg-purple btn-sm"
+                                       href="{{ path('profile_location_edit', {'id' : location.id}) }}"><i
+                                                class="fa fa-edit"></i> Edit</a>
+                                    <a class="btn btn-danger btn-sm"
+                                   href="{{ path('profile_location_delete', {'id' : location.id}) }}"><i
+                                            class="fa fa-remove"></i> Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}

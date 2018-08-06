@@ -1,0 +1,36 @@
+{% extends "ThemeBundle:layout:base-layout.html.twig" %}
+
+{% block page_title %}Lead Tracker{% endblock %}
+{% block page_subtitle %}{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="box box-success">
+                <div class="box-body">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>UNIQUE ID</th>
+                            <th>Status</th>
+                            <th>Update Date</th>
+                            <th>Duration</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for tracker in  trackers %}
+                            <tr>
+                                <td>{{ tracker['lead'] }}</td>
+                                <td>{{ tracker['status'] }}</td>
+                                <td>{{ tracker['date']|date}}</td>
+                                <td>{{ tracker['duration'] }} Days</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
